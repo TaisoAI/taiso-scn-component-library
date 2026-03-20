@@ -1,0 +1,105 @@
+/* Organic Nature — Earthy tones, organic shapes, natural feel */
+[data-theme="organic-nature"] {
+  --background: 37 39% 94%;
+  --foreground: 95 13% 18%;
+  --card: 38 44% 96%;
+  --card-foreground: 95 13% 18%;
+  --popover: 38 44% 96%;
+  --popover-foreground: 95 13% 18%;
+  --primary: 131 22% 29%;
+  --primary-foreground: 37 39% 94%;
+  --secondary: 39 34% 89%;
+  --secondary-foreground: 95 13% 18%;
+  --muted: 39 34% 89%;
+  --muted-foreground: 92 7% 36%;
+  --accent: 40 33% 91%;
+  --accent-foreground: 95 13% 18%;
+  --destructive: 5 52% 35%;
+  --destructive-foreground: 37 39% 94%;
+  --border: 37 24% 83%;
+  --input: 37 24% 83%;
+  --ring: 131 22% 29%;
+  --radius: 0.875rem;
+  --chart-1: 131 22% 29%;
+  --chart-2: 138 25% 27%;
+  --chart-3: 22 56% 31%;
+  --chart-4: 180 21% 27%;
+  --chart-5: 5 52% 35%;
+  --sidebar-background: 39 34% 89%;
+  --sidebar-foreground: 95 13% 18%;
+  --sidebar-primary: 131 22% 29%;
+  --sidebar-primary-foreground: 37 39% 94%;
+  --sidebar-accent: 40 33% 91%;
+  --sidebar-accent-foreground: 95 13% 18%;
+  --sidebar-border: 37 24% 83%;
+  --sidebar-ring: 131 22% 29%;
+
+  --theme-font-heading: 'Quicksand', sans-serif;
+  --theme-font-body: 'DM Sans', sans-serif;
+  --theme-font-mono: 'Fira Code', 'Courier New', monospace;
+
+  --theme-shadow-sm: 0 2px 8px rgba(58, 90, 64, 0.06);
+  --theme-shadow-md: 0 4px 16px rgba(58, 90, 64, 0.08);
+  --theme-shadow-lg: 0 8px 28px rgba(58, 90, 64, 0.1);
+  --theme-shadow-xl: 0 16px 48px rgba(58, 90, 64, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 180ms;
+  --duration-normal: 350ms;
+  --easing-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  --success: 138 25% 27%;
+  --success-foreground: 37 39% 94%;
+  --warning: 22 56% 31%;
+  --warning-foreground: 37 39% 94%;
+  --info: 180 21% 27%;
+  --info-foreground: 37 39% 94%;
+}
+
+[data-theme="organic-nature"][data-mode="dark"] {
+  --background: 107 16% 11%;
+  --foreground: 40 28% 87%;
+  --card: 125 13% 17%;
+  --card-foreground: 40 28% 87%;
+  --popover: 125 13% 17%;
+  --popover-foreground: 40 28% 87%;
+  --primary: 82 20% 62%;
+  --primary-foreground: 107 16% 11%;
+  --secondary: 106 17% 15%;
+  --secondary-foreground: 40 28% 87%;
+  --muted: 106 17% 15%;
+  --muted-foreground: 42 13% 66%;
+  --accent: 111 14% 20%;
+  --accent-foreground: 40 28% 87%;
+  --destructive: 0 57% 75%;
+  --destructive-foreground: 107 16% 11%;
+  --border: 113 14% 25%;
+  --input: 113 14% 25%;
+  --ring: 82 20% 62%;
+  --chart-1: 82 20% 62%;
+  --chart-2: 130 29% 68%;
+  --chart-3: 27 62% 69%;
+  --chart-4: 180 28% 65%;
+  --chart-5: 0 57% 75%;
+  --sidebar-background: 106 17% 15%;
+  --sidebar-foreground: 40 28% 87%;
+  --sidebar-primary: 82 20% 62%;
+  --sidebar-primary-foreground: 107 16% 11%;
+  --sidebar-accent: 111 14% 20%;
+  --sidebar-accent-foreground: 40 28% 87%;
+  --sidebar-border: 113 14% 25%;
+  --sidebar-ring: 82 20% 62%;
+
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --theme-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --theme-shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.3);
+  --theme-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.35);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 130 29% 68%;
+  --success-foreground: 107 16% 11%;
+  --warning: 27 62% 69%;
+  --warning-foreground: 107 16% 11%;
+  --info: 180 28% 65%;
+  --info-foreground: 107 16% 11%;
+}

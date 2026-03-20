@@ -1,0 +1,105 @@
+/* Spatial Depth — Layered, depth-focused, colored glow shadows */
+[data-theme="spatial-depth"] {
+  --background: 240 41% 8%;
+  --foreground: 245 100% 95%;
+  --card: 240 38% 16%;
+  --card-foreground: 245 100% 95%;
+  --popover: 240 38% 16%;
+  --popover-foreground: 245 100% 95%;
+  --primary: 258 90% 67%;
+  --primary-foreground: 240 41% 8%;
+  --secondary: 240 40% 12%;
+  --secondary-foreground: 245 100% 95%;
+  --muted: 240 40% 12%;
+  --muted-foreground: 244 35% 69%;
+  --accent: 240 40% 22%;
+  --accent-foreground: 245 100% 95%;
+  --destructive: 0 91% 74%;
+  --destructive-foreground: 240 41% 8%;
+  --border: 240 40% 16%;
+  --input: 240 40% 16%;
+  --ring: 258 90% 67%;
+  --radius: 0.75rem;
+  --chart-1: 258 90% 67%;
+  --chart-2: 158 64% 52%;
+  --chart-3: 43 96% 56%;
+  --chart-4: 188 86% 53%;
+  --chart-5: 0 91% 74%;
+  --sidebar-background: 240 40% 12%;
+  --sidebar-foreground: 245 100% 95%;
+  --sidebar-primary: 258 90% 67%;
+  --sidebar-primary-foreground: 240 41% 8%;
+  --sidebar-accent: 240 40% 22%;
+  --sidebar-accent-foreground: 245 100% 95%;
+  --sidebar-border: 240 40% 16%;
+  --sidebar-ring: 258 90% 67%;
+
+  --theme-font-heading: 'Sora', system-ui, sans-serif;
+  --theme-font-body: 'Sora', system-ui, sans-serif;
+  --theme-font-mono: 'Fira Code', monospace;
+
+  --theme-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px rgba(139, 92, 246, 0.05);
+  --theme-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(139, 92, 246, 0.08);
+  --theme-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 24px rgba(139, 92, 246, 0.1);
+  --theme-shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 32px rgba(139, 92, 246, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 158 64% 52%;
+  --success-foreground: 240 41% 8%;
+  --warning: 43 96% 56%;
+  --warning-foreground: 240 41% 8%;
+  --info: 188 86% 53%;
+  --info-foreground: 240 41% 8%;
+}
+
+[data-theme="spatial-depth"][data-mode="light"] {
+  --background: 247 100% 97%;
+  --foreground: 240 38% 16%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 38% 16%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 38% 16%;
+  --primary: 262 83% 58%;
+  --primary-foreground: 247 100% 97%;
+  --secondary: 250 100% 94%;
+  --secondary-foreground: 240 38% 16%;
+  --muted: 250 100% 94%;
+  --muted-foreground: 245 20% 44%;
+  --accent: 260 100% 97%;
+  --accent-foreground: 240 38% 16%;
+  --destructive: 0 91% 35%;
+  --destructive-foreground: 247 100% 97%;
+  --border: 251 95% 92%;
+  --input: 251 95% 92%;
+  --ring: 262 83% 58%;
+  --chart-1: 262 83% 58%;
+  --chart-2: 159 64% 23%;
+  --chart-3: 44 96% 22%;
+  --chart-4: 188 86% 23%;
+  --chart-5: 0 91% 35%;
+  --sidebar-background: 250 100% 94%;
+  --sidebar-foreground: 240 38% 16%;
+  --sidebar-primary: 262 83% 58%;
+  --sidebar-primary-foreground: 247 100% 97%;
+  --sidebar-accent: 260 100% 97%;
+  --sidebar-accent-foreground: 240 38% 16%;
+  --sidebar-border: 251 95% 92%;
+  --sidebar-ring: 262 83% 58%;
+
+  --theme-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --theme-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --theme-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.1);
+  --theme-shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 159 64% 23%;
+  --success-foreground: 247 100% 97%;
+  --warning: 44 96% 22%;
+  --warning-foreground: 247 100% 97%;
+  --info: 188 86% 23%;
+  --info-foreground: 247 100% 97%;
+}

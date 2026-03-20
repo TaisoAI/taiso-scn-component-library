@@ -1,0 +1,105 @@
+/* Dark Command — Terminal aesthetic, neon accents, command-palette feel */
+[data-theme="dark-command"] {
+  --background: 240 20% 5%;
+  --foreground: 240 15% 89%;
+  --card: 240 26% 11%;
+  --card-foreground: 240 15% 89%;
+  --popover: 240 26% 11%;
+  --popover-foreground: 240 15% 89%;
+  --primary: 152 100% 50%;
+  --primary-foreground: 240 20% 5%;
+  --secondary: 240 23% 8%;
+  --secondary-foreground: 240 15% 89%;
+  --muted: 240 23% 8%;
+  --muted-foreground: 240 11% 58%;
+  --accent: 240 28% 14%;
+  --accent-foreground: 240 15% 89%;
+  --destructive: 350 100% 72%;
+  --destructive-foreground: 240 20% 5%;
+  --border: 240 28% 16%;
+  --input: 240 28% 16%;
+  --ring: 152 100% 50%;
+  --radius: 0.375rem;
+  --chart-1: 152 100% 50%;
+  --chart-2: 190 100% 50%;
+  --chart-3: 40 100% 50%;
+  --chart-4: 350 100% 72%;
+  --chart-5: 259 44% 55%;
+  --sidebar-background: 240 23% 8%;
+  --sidebar-foreground: 240 15% 89%;
+  --sidebar-primary: 152 100% 50%;
+  --sidebar-primary-foreground: 240 20% 5%;
+  --sidebar-accent: 240 28% 14%;
+  --sidebar-accent-foreground: 240 15% 89%;
+  --sidebar-border: 240 28% 16%;
+  --sidebar-ring: 152 100% 50%;
+
+  --theme-font-heading: 'Share Tech Mono', monospace;
+  --theme-font-body: 'Inter', system-ui, sans-serif;
+  --theme-font-mono: 'Share Tech Mono', monospace;
+
+  --theme-shadow-sm: 0 0 8px rgba(0, 255, 136, 0.05);
+  --theme-shadow-md: 0 0 16px rgba(0, 255, 136, 0.08);
+  --theme-shadow-lg: 0 0 32px rgba(0, 255, 136, 0.1);
+  --theme-shadow-xl: 0 0 48px rgba(0, 255, 136, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 152 100% 50%;
+  --success-foreground: 240 20% 5%;
+  --warning: 40 100% 50%;
+  --warning-foreground: 240 20% 5%;
+  --info: 190 100% 50%;
+  --info-foreground: 240 20% 5%;
+}
+
+[data-theme="dark-command"][data-mode="light"] {
+  --background: 240 20% 95%;
+  --foreground: 240 44% 7%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 44% 7%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 44% 7%;
+  --primary: 161 94% 30%;
+  --primary-foreground: 240 20% 95%;
+  --secondary: 240 24% 92%;
+  --secondary-foreground: 240 44% 7%;
+  --muted: 240 24% 92%;
+  --muted-foreground: 240 14% 39%;
+  --accent: 240 33% 97%;
+  --accent-foreground: 240 44% 7%;
+  --destructive: 0 73% 37%;
+  --destructive-foreground: 240 20% 95%;
+  --border: 240 21% 85%;
+  --input: 240 21% 85%;
+  --ring: 161 94% 30%;
+  --chart-1: 161 94% 30%;
+  --chart-2: 192 92% 24%;
+  --chart-3: 32 94% 26%;
+  --chart-4: 0 73% 37%;
+  --chart-5: 260 39% 49%;
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 240 44% 7%;
+  --sidebar-primary: 161 94% 30%;
+  --sidebar-primary-foreground: 240 20% 95%;
+  --sidebar-accent: 240 33% 97%;
+  --sidebar-accent-foreground: 240 44% 7%;
+  --sidebar-border: 240 21% 85%;
+  --sidebar-ring: 161 94% 30%;
+
+  --theme-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --theme-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --theme-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --theme-shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 162 94% 20%;
+  --success-foreground: 240 20% 95%;
+  --warning: 32 94% 26%;
+  --warning-foreground: 240 20% 95%;
+  --info: 192 92% 24%;
+  --info-foreground: 240 20% 95%;
+}

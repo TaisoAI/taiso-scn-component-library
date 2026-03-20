@@ -1,0 +1,105 @@
+/* Bento Grid — Apple-inspired, clean grid, precise shadows */
+[data-theme="bento-grid"] {
+  --background: 240 33% 99%;
+  --foreground: 240 3% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 3% 12%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 3% 12%;
+  --primary: 210 100% 45%;
+  --primary-foreground: 240 11% 96%;
+  --secondary: 240 11% 96%;
+  --secondary-foreground: 240 3% 12%;
+  --muted: 240 11% 96%;
+  --muted-foreground: 240 2% 44%;
+  --accent: 240 11% 96%;
+  --accent-foreground: 240 3% 12%;
+  --destructive: 3 100% 31%;
+  --destructive-foreground: 240 11% 96%;
+  --border: 240 6% 83%;
+  --input: 240 6% 83%;
+  --ring: 210 100% 45%;
+  --radius: 0.625rem;
+  --chart-1: 210 100% 45%;
+  --chart-2: 129 67% 23%;
+  --chart-3: 36 100% 24%;
+  --chart-4: 210 100% 31%;
+  --chart-5: 3 100% 31%;
+  --sidebar-background: 240 11% 96%;
+  --sidebar-foreground: 240 3% 12%;
+  --sidebar-primary: 210 100% 45%;
+  --sidebar-primary-foreground: 240 11% 96%;
+  --sidebar-accent: 240 11% 96%;
+  --sidebar-accent-foreground: 240 3% 12%;
+  --sidebar-border: 240 6% 83%;
+  --sidebar-ring: 210 100% 45%;
+
+  --theme-font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --theme-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --theme-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --theme-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.04);
+  --theme-shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.08), 0 16px 48px rgba(0, 0, 0, 0.04);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 150ms;
+  --duration-normal: 280ms;
+  --easing-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  --success: 129 67% 23%;
+  --success-foreground: 240 11% 96%;
+  --warning: 36 100% 24%;
+  --warning-foreground: 240 11% 96%;
+  --info: 210 100% 31%;
+  --info-foreground: 240 11% 96%;
+}
+
+[data-theme="bento-grid"][data-mode="dark"] {
+  --background: 0 0% 0%;
+  --foreground: 240 11% 96%;
+  --card: 240 3% 11%;
+  --card-foreground: 240 11% 96%;
+  --popover: 240 3% 11%;
+  --popover-foreground: 240 11% 96%;
+  --primary: 209 100% 58%;
+  --primary-foreground: 240 3% 12%;
+  --secondary: 240 3% 11%;
+  --secondary-foreground: 240 11% 96%;
+  --muted: 240 3% 11%;
+  --muted-foreground: 240 2% 61%;
+  --accent: 240 2% 18%;
+  --accent-foreground: 240 11% 96%;
+  --destructive: 4 100% 74%;
+  --destructive-foreground: 240 3% 12%;
+  --border: 240 2% 22%;
+  --input: 240 2% 22%;
+  --ring: 209 100% 58%;
+  --chart-1: 209 100% 58%;
+  --chart-2: 135 64% 50%;
+  --chart-3: 36 100% 52%;
+  --chart-4: 209 100% 67%;
+  --chart-5: 4 100% 74%;
+  --sidebar-background: 240 3% 11%;
+  --sidebar-foreground: 240 11% 96%;
+  --sidebar-primary: 209 100% 58%;
+  --sidebar-primary-foreground: 240 3% 12%;
+  --sidebar-accent: 240 2% 18%;
+  --sidebar-accent-foreground: 240 11% 96%;
+  --sidebar-border: 240 2% 22%;
+  --sidebar-ring: 209 100% 58%;
+
+  --theme-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
+  --theme-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15);
+  --theme-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
+  --theme-shadow-xl: 0 8px 32px rgba(0, 0, 0, 0.35), 0 16px 48px rgba(0, 0, 0, 0.25);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 135 64% 50%;
+  --success-foreground: 240 3% 12%;
+  --warning: 36 100% 52%;
+  --warning-foreground: 240 3% 12%;
+  --info: 209 100% 67%;
+  --info-foreground: 240 3% 12%;
+}

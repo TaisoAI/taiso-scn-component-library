@@ -1,0 +1,105 @@
+/* Corporate Sharp — Professional, high-contrast, desaturated, structured */
+[data-theme="corporate-sharp"] {
+  --background: 210 20% 98%;
+  --foreground: 210 25% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 25% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 25% 10%;
+  --primary: 210 80% 38%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 15% 94%;
+  --secondary-foreground: 210 25% 10%;
+  --muted: 210 15% 94%;
+  --muted-foreground: 210 10% 42%;
+  --accent: 210 15% 96%;
+  --accent-foreground: 210 25% 10%;
+  --destructive: 0 72% 42%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 15% 85%;
+  --input: 210 15% 85%;
+  --ring: 210 80% 38%;
+  --radius: 0.25rem;
+  --chart-1: 210 80% 38%;
+  --chart-2: 145 55% 32%;
+  --chart-3: 35 80% 48%;
+  --chart-4: 195 65% 38%;
+  --chart-5: 0 72% 42%;
+  --sidebar-background: 210 20% 97%;
+  --sidebar-foreground: 210 25% 10%;
+  --sidebar-primary: 210 80% 38%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 15% 96%;
+  --sidebar-accent-foreground: 210 25% 10%;
+  --sidebar-border: 210 15% 85%;
+  --sidebar-ring: 210 80% 38%;
+
+  --theme-font-heading: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --theme-font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --theme-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --theme-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --theme-shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
+  --theme-shadow-xl: 0 10px 15px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.03);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.25);
+
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 145 55% 32%;
+  --success-foreground: 0 0% 100%;
+  --warning: 35 80% 48%;
+  --warning-foreground: 210 25% 10%;
+  --info: 195 65% 38%;
+  --info-foreground: 0 0% 100%;
+}
+
+[data-theme="corporate-sharp"][data-mode="dark"] {
+  --background: 210 22% 8%;
+  --foreground: 210 15% 92%;
+  --card: 210 20% 11%;
+  --card-foreground: 210 15% 92%;
+  --popover: 210 20% 11%;
+  --popover-foreground: 210 15% 92%;
+  --primary: 210 70% 58%;
+  --primary-foreground: 210 22% 8%;
+  --secondary: 210 18% 14%;
+  --secondary-foreground: 210 15% 92%;
+  --muted: 210 18% 14%;
+  --muted-foreground: 210 10% 55%;
+  --accent: 210 18% 16%;
+  --accent-foreground: 210 15% 92%;
+  --destructive: 0 65% 65%;
+  --destructive-foreground: 210 22% 8%;
+  --border: 210 16% 20%;
+  --input: 210 16% 20%;
+  --ring: 210 70% 58%;
+  --chart-1: 210 70% 58%;
+  --chart-2: 145 48% 55%;
+  --chart-3: 35 72% 60%;
+  --chart-4: 195 58% 55%;
+  --chart-5: 0 65% 65%;
+  --sidebar-background: 210 22% 7%;
+  --sidebar-foreground: 210 15% 92%;
+  --sidebar-primary: 210 70% 58%;
+  --sidebar-primary-foreground: 210 22% 8%;
+  --sidebar-accent: 210 18% 16%;
+  --sidebar-accent-foreground: 210 15% 92%;
+  --sidebar-border: 210 16% 20%;
+  --sidebar-ring: 210 70% 58%;
+
+  --theme-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --theme-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.15);
+  --theme-shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+  --theme-shadow-xl: 0 10px 15px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.15);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.25);
+
+  --success: 145 48% 55%;
+  --success-foreground: 210 22% 8%;
+  --warning: 35 72% 60%;
+  --warning-foreground: 210 22% 8%;
+  --info: 195 58% 55%;
+  --info-foreground: 210 22% 8%;
+}

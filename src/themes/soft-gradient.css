@@ -1,0 +1,105 @@
+/* Soft Gradient — Gentle purple tones, soft transitions, rounded */
+[data-theme="soft-gradient"] {
+  --background: 270 100% 98%;
+  --foreground: 244 47% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 244 47% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 244 47% 20%;
+  --primary: 255 92% 76%;
+  --primary-foreground: 244 47% 20%;
+  --secondary: 263 100% 95%;
+  --secondary-foreground: 244 47% 20%;
+  --muted: 263 100% 95%;
+  --muted-foreground: 247 26% 45%;
+  --accent: 272 100% 97%;
+  --accent-foreground: 244 47% 20%;
+  --destructive: 0 91% 35%;
+  --destructive-foreground: 270 100% 98%;
+  --border: 269 100% 92%;
+  --input: 269 100% 92%;
+  --ring: 255 92% 76%;
+  --radius: 0.75rem;
+  --chart-1: 255 92% 76%;
+  --chart-2: 159 64% 23%;
+  --chart-3: 44 96% 22%;
+  --chart-4: 213 94% 35%;
+  --chart-5: 0 91% 35%;
+  --sidebar-background: 263 100% 95%;
+  --sidebar-foreground: 244 47% 20%;
+  --sidebar-primary: 255 92% 76%;
+  --sidebar-primary-foreground: 244 47% 20%;
+  --sidebar-accent: 272 100% 97%;
+  --sidebar-accent-foreground: 244 47% 20%;
+  --sidebar-border: 269 100% 92%;
+  --sidebar-ring: 255 92% 76%;
+
+  --theme-font-heading: 'DM Sans', system-ui, sans-serif;
+  --theme-font-body: 'DM Sans', system-ui, sans-serif;
+  --theme-font-mono: 'Fira Code', monospace;
+
+  --theme-shadow-sm: 0 2px 8px rgba(167, 139, 250, 0.1);
+  --theme-shadow-md: 0 4px 16px rgba(167, 139, 250, 0.12);
+  --theme-shadow-lg: 0 8px 32px rgba(167, 139, 250, 0.14);
+  --theme-shadow-xl: 0 16px 48px rgba(167, 139, 250, 0.16);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 159 64% 23%;
+  --success-foreground: 270 100% 98%;
+  --warning: 44 96% 22%;
+  --warning-foreground: 270 100% 98%;
+  --info: 213 94% 35%;
+  --info-foreground: 270 100% 98%;
+}
+
+[data-theme="soft-gradient"][data-mode="dark"] {
+  --background: 264 52% 13%;
+  --foreground: 263 100% 95%;
+  --card: 262 50% 20%;
+  --card-foreground: 263 100% 95%;
+  --popover: 262 50% 20%;
+  --popover-foreground: 263 100% 95%;
+  --primary: 252 95% 85%;
+  --primary-foreground: 264 52% 13%;
+  --secondary: 264 53% 18%;
+  --secondary-foreground: 263 100% 95%;
+  --muted: 264 53% 18%;
+  --muted-foreground: 266 42% 74%;
+  --accent: 263 48% 25%;
+  --accent-foreground: 263 100% 95%;
+  --destructive: 0 91% 35%;
+  --destructive-foreground: 263 100% 95%;
+  --border: 263 41% 27%;
+  --input: 263 41% 27%;
+  --ring: 252 95% 85%;
+  --chart-1: 252 95% 85%;
+  --chart-2: 159 64% 23%;
+  --chart-3: 44 96% 22%;
+  --chart-4: 213 94% 35%;
+  --chart-5: 0 91% 35%;
+  --sidebar-background: 264 53% 18%;
+  --sidebar-foreground: 263 100% 95%;
+  --sidebar-primary: 252 95% 85%;
+  --sidebar-primary-foreground: 264 52% 13%;
+  --sidebar-accent: 263 48% 25%;
+  --sidebar-accent-foreground: 263 100% 95%;
+  --sidebar-border: 263 41% 27%;
+  --sidebar-ring: 252 95% 85%;
+
+  --theme-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --theme-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --theme-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --theme-shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.35);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 159 64% 23%;
+  --success-foreground: 263 100% 95%;
+  --warning: 44 96% 22%;
+  --warning-foreground: 263 100% 95%;
+  --info: 213 94% 35%;
+  --info-foreground: 263 100% 95%;
+}

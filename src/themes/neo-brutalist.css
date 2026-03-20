@@ -1,0 +1,115 @@
+/* Neo Brutalist — Raw, typographic, thick borders, hard shadows, press interactions */
+[data-theme="neo-brutalist"] {
+  --background: 60 100% 100%;
+  --foreground: 240 28% 14%;
+  --card: 60 100% 100%;
+  --card-foreground: 240 28% 14%;
+  --popover: 60 100% 100%;
+  --popover-foreground: 240 28% 14%;
+  --primary: 217 100% 66%;
+  --primary-foreground: 240 28% 14%;
+  --secondary: 37 39% 94%;
+  --secondary-foreground: 240 28% 14%;
+  --muted: 37 39% 94%;
+  --muted-foreground: 240 12% 33%;
+  --accent: 37 57% 95%;
+  --accent-foreground: 240 28% 14%;
+  --destructive: 0 100% 29%;
+  --destructive-foreground: 60 100% 100%;
+  --border: 240 28% 14%;
+  --input: 240 28% 14%;
+  --ring: 217 100% 66%;
+  --radius: 0.3125rem;
+  --chart-1: 217 100% 66%;
+  --chart-2: 165 94% 19%;
+  --chart-3: 48 100% 20%;
+  --chart-4: 195 85% 24%;
+  --chart-5: 0 100% 29%;
+  --sidebar-background: 37 39% 94%;
+  --sidebar-foreground: 240 28% 14%;
+  --sidebar-primary: 217 100% 66%;
+  --sidebar-primary-foreground: 240 28% 14%;
+  --sidebar-accent: 37 57% 95%;
+  --sidebar-accent-foreground: 240 28% 14%;
+  --sidebar-border: 240 28% 14%;
+  --sidebar-ring: 217 100% 66%;
+
+  --theme-font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --theme-font-body: 'Space Grotesk', system-ui, sans-serif;
+  --theme-font-mono: 'Space Mono', monospace;
+
+  --theme-shadow-sm: 4px 4px 0px 0px hsl(240 28% 14%);
+  --theme-shadow-md: 4px 4px 0px 0px hsl(240 28% 14%);
+  --theme-shadow-lg: 6px 6px 0px 0px hsl(240 28% 14%);
+  --theme-shadow-xl: 8px 8px 0px 0px hsl(240 28% 14%);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.4);
+
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 165 94% 19%;
+  --success-foreground: 60 100% 100%;
+  --warning: 48 100% 20%;
+  --warning-foreground: 60 100% 100%;
+  --info: 195 85% 24%;
+  --info-foreground: 60 100% 100%;
+
+  /* Brutalist-specific tokens */
+  --border-width: 2px;
+  --box-shadow-x: 4px;
+  --box-shadow-y: 4px;
+  --reverse-box-shadow-x: -4px;
+  --reverse-box-shadow-y: -4px;
+  --theme-font-weight-base: 500;
+  --theme-font-weight-heading: 700;
+}
+
+[data-theme="neo-brutalist"][data-mode="dark"] {
+  --background: 240 28% 14%;
+  --foreground: 60 100% 100%;
+  --card: 240 29% 19%;
+  --card-foreground: 60 100% 100%;
+  --popover: 240 29% 19%;
+  --popover-foreground: 60 100% 100%;
+  --primary: 217 100% 53%;
+  --primary-foreground: 60 100% 100%;
+  --secondary: 240 31% 13%;
+  --secondary-foreground: 60 100% 100%;
+  --muted: 240 31% 13%;
+  --muted-foreground: 240 22% 75%;
+  --accent: 240 28% 25%;
+  --accent-foreground: 60 100% 100%;
+  --destructive: 0 100% 29%;
+  --destructive-foreground: 60 100% 100%;
+  --border: 60 100% 100%;
+  --input: 60 100% 100%;
+  --ring: 217 100% 66%;
+  --chart-1: 217 100% 66%;
+  --chart-2: 165 94% 19%;
+  --chart-3: 48 100% 20%;
+  --chart-4: 195 85% 24%;
+  --chart-5: 0 100% 29%;
+  --sidebar-background: 240 31% 13%;
+  --sidebar-foreground: 60 100% 100%;
+  --sidebar-primary: 217 100% 66%;
+  --sidebar-primary-foreground: 240 28% 14%;
+  --sidebar-accent: 240 28% 25%;
+  --sidebar-accent-foreground: 60 100% 100%;
+  --sidebar-border: 60 100% 100%;
+  --sidebar-ring: 217 100% 66%;
+
+  /* Shadows stay dark/black even in dark mode — brutalist signature */
+  --theme-shadow-sm: 4px 4px 0px 0px hsl(0 0% 0%);
+  --theme-shadow-md: 4px 4px 0px 0px hsl(0 0% 0%);
+  --theme-shadow-lg: 6px 6px 0px 0px hsl(0 0% 0%);
+  --theme-shadow-xl: 8px 8px 0px 0px hsl(0 0% 0%);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.4);
+
+  --success: 165 94% 19%;
+  --success-foreground: 60 100% 100%;
+  --warning: 48 100% 20%;
+  --warning-foreground: 60 100% 100%;
+  --info: 195 85% 24%;
+  --info-foreground: 60 100% 100%;
+}

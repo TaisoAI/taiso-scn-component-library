@@ -1,0 +1,311 @@
+@import "tailwindcss";
+@import "../themes/index.css";
+
+@custom-variant dark (&:is([data-mode="dark"] *));
+
+@theme inline {
+  /* Map shadcn CSS variables to Tailwind theme tokens */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  /* Shadows — map Tailwind shadow utilities to theme variables */
+  --shadow-xs: var(--theme-shadow-sm);
+  --shadow-sm: var(--theme-shadow-sm);
+  --shadow: var(--theme-shadow-md);
+  --shadow-md: var(--theme-shadow-md);
+  --shadow-lg: var(--theme-shadow-lg);
+  --shadow-xl: var(--theme-shadow-xl);
+
+  /* Extended: Typography */
+  --font-heading: var(--theme-font-heading);
+  --font-body: var(--theme-font-body);
+  --font-mono: var(--theme-font-mono);
+
+  /* Extended: Animation */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-progress-indeterminate: progress-indeterminate 1.5s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--theme-font-body);
+    font-weight: var(--theme-font-weight-base, 400);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--theme-font-heading);
+    font-weight: var(--theme-font-weight-heading, 600);
+  }
+  code, pre, kbd {
+    font-family: var(--theme-font-mono);
+  }
+
+}
+
+/* Theme-specific overrides — outside @layer so they beat utility classes */
+
+/* Glass-morphism: apply backdrop-blur to surface elements */
+[data-theme="glass-morphism"] [data-slot="card"],
+[data-theme="glass-morphism"] [data-slot="popover-content"],
+[data-theme="glass-morphism"] [data-slot="select-content"],
+[data-theme="glass-morphism"] [data-slot="dialog-content"],
+[data-theme="glass-morphism"] [data-slot="alert-dialog-content"],
+[data-theme="glass-morphism"] [data-slot="sheet-content"],
+[data-theme="glass-morphism"] [data-slot="drawer-content"],
+[data-theme="glass-morphism"] [data-slot="dropdown-menu-content"],
+[data-theme="glass-morphism"] [data-slot="hover-card-content"],
+[data-theme="glass-morphism"] [data-slot="tooltip-content"],
+[data-theme="glass-morphism"] [data-slot="context-menu-content"],
+[data-theme="glass-morphism"] [data-slot="command"] {
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* Glass-morphism: override opaque bg-background on overlay surfaces to use semi-transparent popover bg */
+[data-theme="glass-morphism"] [data-slot="dialog-content"],
+[data-theme="glass-morphism"] [data-slot="alert-dialog-content"],
+[data-theme="glass-morphism"] [data-slot="sheet-content"],
+[data-theme="glass-morphism"] [data-slot="drawer-content"] {
+  background-color: hsl(var(--popover));
+}
+
+/* Monochrome Dense: reduce spacing for information-dense layouts */
+[data-theme="monochrome-dense"] [data-slot="card"] {
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+[data-theme="monochrome-dense"] [data-slot="card-header"] {
+  gap: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+[data-theme="monochrome-dense"] [data-slot="card-content"] {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+[data-theme="monochrome-dense"] [data-slot="card-footer"] {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+[data-theme="monochrome-dense"] [data-slot="button"] {
+  height: 2rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  font-size: 0.8125rem;
+}
+[data-theme="monochrome-dense"] [data-slot="button"][data-size="lg"] {
+  height: 2.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+[data-theme="monochrome-dense"] [data-slot="button"][data-size="sm"] {
+  height: 1.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+[data-theme="monochrome-dense"] [data-slot="input"],
+[data-theme="monochrome-dense"] [data-slot="textarea"],
+[data-theme="monochrome-dense"] [data-slot="select-trigger"] {
+  height: 2rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.8125rem;
+}
+[data-theme="monochrome-dense"] [data-slot="accordion-trigger"] {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 0.8125rem;
+}
+[data-theme="monochrome-dense"] [data-slot="tabs-trigger"] {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+}
+[data-theme="monochrome-dense"] [data-slot="alert"] {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+}
+[data-theme="monochrome-dense"] [data-slot="badge"] {
+  font-size: 0.6875rem;
+  padding: 0.125rem 0.375rem;
+}
+
+/* Neo-brutalist: remove shadows from small form controls */
+[data-theme="neo-brutalist"] :is(
+  [data-slot="checkbox"],
+  [data-slot="input"],
+  [data-slot="input-otp"],
+  [data-slot="input-otp-slot"],
+  [data-slot="radio-group-item"],
+  [data-slot="slider"],
+  [data-slot="slider-thumb"],
+  [data-slot="switch"]
+) {
+  box-shadow: none;
+}
+
+/* Neo-brutalist: apply thick borders to interactive/surface elements */
+[data-theme="neo-brutalist"] [data-slot="card"],
+[data-theme="neo-brutalist"] [data-slot="dialog-content"],
+[data-theme="neo-brutalist"] [data-slot="sheet-content"],
+[data-theme="neo-brutalist"] [data-slot="popover-content"],
+[data-theme="neo-brutalist"] [data-slot="dropdown-menu-content"],
+[data-theme="neo-brutalist"] [data-slot="command"],
+[data-theme="neo-brutalist"] [data-slot="input"],
+[data-theme="neo-brutalist"] [data-slot="textarea"],
+[data-theme="neo-brutalist"] [data-slot="select-trigger"] {
+  border-width: var(--border-width);
+}
+
+/* Neo-brutalist: add shadow + border to all button-like elements */
+/* Covers: direct Button, asChild triggers, alert-dialog actions, carousel nav, toggle */
+[data-theme="neo-brutalist"] :is(
+  [data-slot="button"],
+  [data-slot="dialog-trigger"],
+  [data-slot="sheet-trigger"],
+  [data-slot="popover-trigger"],
+  [data-slot="dropdown-menu-trigger"],
+  [data-slot="alert-dialog-trigger"],
+  [data-slot="alert-dialog-action"],
+  [data-slot="alert-dialog-cancel"],
+  [data-slot="drawer-trigger"],
+  [data-slot="collapsible-trigger"],
+  [data-slot="toggle"]
+):not([data-variant="ghost"]):not([data-variant="link"]) {
+  box-shadow: var(--theme-shadow-md);
+  border: var(--border-width) solid hsl(var(--border));
+}
+
+/* Neo-brutalist: interactive press effect on hover */
+[data-theme="neo-brutalist"] :is(
+  [data-slot="button"],
+  [data-slot="dialog-trigger"],
+  [data-slot="sheet-trigger"],
+  [data-slot="popover-trigger"],
+  [data-slot="dropdown-menu-trigger"],
+  [data-slot="alert-dialog-trigger"],
+  [data-slot="alert-dialog-action"],
+  [data-slot="alert-dialog-cancel"],
+  [data-slot="drawer-trigger"],
+  [data-slot="collapsible-trigger"],
+  [data-slot="toggle"]
+):not([data-variant="ghost"]):not([data-variant="link"]):not(:disabled):hover {
+  translate: var(--box-shadow-x) var(--box-shadow-y);
+  box-shadow: none !important;
+}
+
+/* Neo-brutalist: transition for press effect */
+[data-theme="neo-brutalist"] :is(
+  [data-slot="button"],
+  [data-slot="dialog-trigger"],
+  [data-slot="sheet-trigger"],
+  [data-slot="popover-trigger"],
+  [data-slot="dropdown-menu-trigger"],
+  [data-slot="alert-dialog-trigger"],
+  [data-slot="alert-dialog-action"],
+  [data-slot="alert-dialog-cancel"],
+  [data-slot="drawer-trigger"],
+  [data-slot="collapsible-trigger"],
+  [data-slot="toggle"]
+):not([data-variant="ghost"]):not([data-variant="link"]) {
+  transition: translate 150ms ease, box-shadow 150ms ease;
+}
+
+/* Neo-brutalist: carousel nav — shadow + border only, no hover animation */
+[data-theme="neo-brutalist"] :is(
+  [data-slot="carousel-previous"],
+  [data-slot="carousel-next"]
+) {
+  box-shadow: 2px 2px 0px 0px hsl(var(--border));
+  border: var(--border-width) solid hsl(var(--border));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+@keyframes progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(200%); }
+  100% { transform: translateX(-100%); }
+}
+
+:root {
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}

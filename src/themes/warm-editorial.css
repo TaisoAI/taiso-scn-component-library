@@ -1,0 +1,105 @@
+/* Warm Editorial — Warm tones, serif typography, editorial feel */
+[data-theme="warm-editorial"] {
+  --background: 33 47% 96%;
+  --foreground: 17 47% 12%;
+  --card: 40 100% 99%;
+  --card-foreground: 17 47% 12%;
+  --popover: 40 100% 99%;
+  --popover-foreground: 17 47% 12%;
+  --primary: 14 56% 46%;
+  --primary-foreground: 33 47% 96%;
+  --secondary: 34 40% 92%;
+  --secondary-foreground: 17 47% 12%;
+  --muted: 34 40% 92%;
+  --muted-foreground: 20 20% 35%;
+  --accent: 35 43% 95%;
+  --accent-foreground: 17 47% 12%;
+  --destructive: 14 56% 32%;
+  --destructive-foreground: 33 47% 96%;
+  --border: 33 28% 83%;
+  --input: 33 28% 83%;
+  --ring: 14 56% 46%;
+  --radius: 0.25rem;
+  --chart-1: 14 56% 46%;
+  --chart-2: 157 28% 27%;
+  --chart-3: 39 63% 25%;
+  --chart-4: 204 39% 30%;
+  --chart-5: 14 56% 32%;
+  --sidebar-background: 34 40% 92%;
+  --sidebar-foreground: 17 47% 12%;
+  --sidebar-primary: 14 56% 46%;
+  --sidebar-primary-foreground: 33 47% 96%;
+  --sidebar-accent: 35 43% 95%;
+  --sidebar-accent-foreground: 17 47% 12%;
+  --sidebar-border: 33 28% 83%;
+  --sidebar-ring: 14 56% 46%;
+
+  --theme-font-heading: 'Playfair Display', Georgia, serif;
+  --theme-font-body: 'Source Serif 4', Georgia, serif;
+  --theme-font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --theme-shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.06);
+  --theme-shadow-md: 0 2px 6px rgba(44, 24, 16, 0.08);
+  --theme-shadow-lg: 0 4px 12px rgba(44, 24, 16, 0.1);
+  --theme-shadow-xl: 0 8px 24px rgba(44, 24, 16, 0.12);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: 157 28% 27%;
+  --success-foreground: 33 47% 96%;
+  --warning: 39 63% 25%;
+  --warning-foreground: 33 47% 96%;
+  --info: 204 39% 30%;
+  --info-foreground: 33 47% 96%;
+}
+
+[data-theme="warm-editorial"][data-mode="dark"] {
+  --background: 10 27% 9%;
+  --foreground: 33 42% 90%;
+  --card: 15 24% 13%;
+  --card-foreground: 33 42% 90%;
+  --popover: 15 24% 13%;
+  --popover-foreground: 33 42% 90%;
+  --primary: 18 76% 63%;
+  --primary-foreground: 10 27% 9%;
+  --secondary: 16 25% 12%;
+  --secondary-foreground: 33 42% 90%;
+  --muted: 16 25% 12%;
+  --muted-foreground: 30 18% 66%;
+  --accent: 18 24% 16%;
+  --accent-foreground: 33 42% 90%;
+  --destructive: 14 57% 73%;
+  --destructive-foreground: 10 27% 9%;
+  --border: 17 21% 20%;
+  --input: 17 21% 20%;
+  --ring: 18 76% 63%;
+  --chart-1: 18 76% 63%;
+  --chart-2: 157 28% 62%;
+  --chart-3: 40 62% 64%;
+  --chart-4: 202 39% 69%;
+  --chart-5: 14 57% 73%;
+  --sidebar-background: 16 25% 12%;
+  --sidebar-foreground: 33 42% 90%;
+  --sidebar-primary: 18 76% 63%;
+  --sidebar-primary-foreground: 10 27% 9%;
+  --sidebar-accent: 18 24% 16%;
+  --sidebar-accent-foreground: 33 42% 90%;
+  --sidebar-border: 17 21% 20%;
+  --sidebar-ring: 18 76% 63%;
+
+  --theme-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --theme-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.3);
+  --theme-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --theme-shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --theme-shadow-focus: 0 0 0 3px hsl(var(--ring) / 0.3);
+
+  --success: 157 28% 62%;
+  --success-foreground: 10 27% 9%;
+  --warning: 40 62% 64%;
+  --warning-foreground: 10 27% 9%;
+  --info: 202 39% 69%;
+  --info-foreground: 10 27% 9%;
+}

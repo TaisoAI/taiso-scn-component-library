@@ -54,7 +54,20 @@ import { EmptyDemo } from './demos/EmptyDemo'
 import { FieldDemo } from './demos/FieldDemo'
 import { InputGroupDemo } from './demos/InputGroupDemo'
 import { LoginBlockDemo } from './demos/LoginBlockDemo'
-import { ChatbotDemo } from './demos/ChatbotDemo'
+import { FileManagerDemo } from './demos/FileManagerDemo'
+import { JobQueuePanelDemo } from './demos/JobQueuePanelDemo'
+import { SearchBarDemo } from './demos/SearchBarDemo'
+import { ToolPickerDemo } from './demos/ToolPickerDemo'
+import { PermissionsEditorDemo } from './demos/PermissionsEditorDemo'
+import { APIKeyManagerDemo } from './demos/APIKeyManagerDemo'
+import { VersionTimelineDemo } from './demos/VersionTimelineDemo'
+import { SOPCatalogBrowserDemo } from './demos/SOPCatalogBrowserDemo'
+import { AgentConfiguratorDemo } from './demos/AgentConfiguratorDemo'
+import { ScheduleManagerDemo } from './demos/ScheduleManagerDemo'
+import { RunDashboardDemo } from './demos/RunDashboardDemo'
+import { RunDetailViewDemo } from './demos/RunDetailViewDemo'
+import { TaisoChatDemo } from './demos/TaisoChatDemo'
+import { SOPCanvasDemo } from './demos/SOPCanvasDemo'
 
 const NAV_SECTIONS = [
   {
@@ -130,8 +143,26 @@ const NAV_SECTIONS = [
   {
     title: 'Blocks',
     items: [
-      { id: 'chatbot', label: 'Chatbot' },
       { id: 'login-block', label: 'Login' },
+    ],
+  },
+  {
+    title: 'Taiso Service Components',
+    items: [
+      { id: 'taiso-chat', label: 'Taiso Chat' },
+      { id: 'sop-canvas', label: 'SOP Canvas' },
+      { id: 'file-manager', label: 'File Manager' },
+      { id: 'job-queue-panel', label: 'Job Queue Panel' },
+      { id: 'search-bar', label: 'Search Bar' },
+      { id: 'tool-picker', label: 'Tool Picker' },
+      { id: 'permissions-editor', label: 'Permissions Editor' },
+      { id: 'api-key-manager', label: 'API Key Manager' },
+      { id: 'version-timeline', label: 'Version Timeline' },
+      { id: 'sop-catalog-browser', label: 'SOP Catalog Browser' },
+      { id: 'agent-configurator', label: 'Agent Configurator' },
+      { id: 'schedule-manager', label: 'Schedule Manager' },
+      { id: 'run-dashboard', label: 'Run Dashboard' },
+      { id: 'run-detail-view', label: 'Run Detail View' },
     ],
   },
 ]
@@ -182,8 +213,21 @@ const DEMO_COMPONENTS: Record<string, React.FC> = {
   empty: EmptyDemo,
   field: FieldDemo,
   'input-group': InputGroupDemo,
-  chatbot: ChatbotDemo,
   'login-block': LoginBlockDemo,
+  'taiso-chat': TaisoChatDemo,
+  'sop-canvas': SOPCanvasDemo,
+  'file-manager': FileManagerDemo,
+  'job-queue-panel': JobQueuePanelDemo,
+  'search-bar': SearchBarDemo,
+  'tool-picker': ToolPickerDemo,
+  'permissions-editor': PermissionsEditorDemo,
+  'api-key-manager': APIKeyManagerDemo,
+  'version-timeline': VersionTimelineDemo,
+  'sop-catalog-browser': SOPCatalogBrowserDemo,
+  'agent-configurator': AgentConfiguratorDemo,
+  'schedule-manager': ScheduleManagerDemo,
+  'run-dashboard': RunDashboardDemo,
+  'run-detail-view': RunDetailViewDemo,
 }
 
 function ThemeBar() {

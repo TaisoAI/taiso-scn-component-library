@@ -1,6 +1,6 @@
 # Taiso SCN Component Library
 
-A themeable React component library built on [shadcn/ui](https://ui.shadcn.com), with 55 UI components, 14 blocks, 14 visual themes, and full dark/light mode support. Powered by Tailwind CSS v4 and Radix UI primitives.
+A themeable React component library built on [shadcn/ui](https://ui.shadcn.com), with 55 UI components, 14 blocks, 17 layout templates, 14 visual themes, and full dark/light mode support. Powered by Tailwind CSS v4 and Radix UI primitives.
 
 ## Components (55)
 
@@ -13,6 +13,14 @@ A themeable React component library built on [shadcn/ui](https://ui.shadcn.com),
 Swiss Minimal, Glass Morphism, Neo Brutalist, Dark Command, Monochrome Dense, Warm Editorial, Soft Gradient, Spatial Depth, Organic Nature, Bento Grid, Retro Y2K, Soft Emboss, Corporate Sharp, Luxury Amber
 
 Each theme supports both light and dark modes.
+
+## Templates (17)
+
+Pre-built layout templates with zone definitions and component mappings for common app patterns:
+
+Sidebar + Content, Dashboard / Overview, Wizard / Multi-Step, Top Nav + Content, Master-Detail, Canvas / Workspace, Feed / Timeline, Table / Data Grid, Split Input / Preview, Chat / Conversation, Settings / Profile, Auth Screens, Inbox / Notification Center, Modal / Overlay, Split Browser / Doc+Result, Landing / Marketing, Empty / Error State
+
+Each template includes layout structure, zone roles, recommended components, and typical content guidelines.
 
 ## Tech Stack
 
@@ -69,6 +77,7 @@ src/
     types.ts             Theme name types and labels
     utils.ts             cn() utility
   index.ts        Public exports
+templates/        17 layout templates with zone definitions
 ```
 
 ## Architecture

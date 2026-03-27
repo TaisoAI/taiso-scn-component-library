@@ -1,0 +1,1386 @@
+[
+  {
+    "id": "sidebar-content",
+    "version": "1.0",
+    "display_name": "Sidebar + content",
+    "layout_description": "A two-column layout with a fixed-width left sidebar and a flexible main content area that fills the remaining width. The sidebar is persistent \u2014 it remains visible during navigation and does not scroll with the content. The main area is a general-purpose region that can host any primary view: a list, a form, a data table, a feed, or a detail panel. An optional third panel can slide in from the right edge to display contextual detail without replacing the main view. The sidebar typically contains a wordmark or app logo at the top, followed by a vertical stack of navigation links grouped by section, and a user profile or account control pinned to the bottom.",
+    "html_structure": "import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarTrigger } from '@/components/ui/sidebar'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Separator } from '@/components/ui/separator'\nimport { Toaster } from '@/components/ui/sonner'\n\nexport default function App() {\n  return (\n    <SidebarProvider>\n      <div className=\"min-h-screen flex w-full\">\n\n        {/* Sidebar */}\n        <Sidebar>\n          <SidebarHeader>\n            {/* Wordmark or app logo */}\n          </SidebarHeader>\n\n          <SidebarContent>\n            <SidebarGroup>\n              <SidebarGroupLabel><!-- Section label --></SidebarGroupLabel>\n              <SidebarGroupContent>\n                <SidebarMenu>\n                  <SidebarMenuItem>\n                    <SidebarMenuButton><!-- Nav link --></SidebarMenuButton>\n                  </SidebarMenuItem>\n                </SidebarMenu>\n              </SidebarGroupContent>\n            </SidebarGroup>\n          </SidebarContent>\n\n          <SidebarFooter>\n            {/* Avatar + user name + account menu */}\n            <Avatar><AvatarFallback>U</AvatarFallback></Avatar>\n          </SidebarFooter>\n        </Sidebar>\n\n        {/* Main content area */}\n        <main className=\"flex-1 flex flex-col overflow-hidden\">\n          <header className=\"flex items-center gap-2 px-6 py-3 border-b\">\n            <SidebarTrigger />\n            {/* Page title / breadcrumb */}\n          </header>\n          <div className=\"flex-1 overflow-y-auto p-6\">\n            {/* Primary view: rendered page content */}\n          </div>\n        </main>\n\n        {/* Optional: Sheet-based detail panel */}\n        {/* <Sheet> ... </Sheet> */}\n\n      </div>\n    </SidebarProvider>\n  )\n}",
+    "zones": {
+      "sidebar": {
+        "role": "Primary navigation and app identity",
+        "components": {
+          "shell": "SidebarProvider + Sidebar",
+          "header": "SidebarHeader",
+          "nav-groups": "SidebarGroup + SidebarGroupLabel + SidebarGroupContent",
+          "nav-items": "SidebarMenu + SidebarMenuItem + SidebarMenuButton",
+          "footer": "SidebarFooter + Avatar + AvatarFallback",
+          "collapse-toggle": "SidebarTrigger"
+        },
+        "block_alternative": "app-sidebar \u2014 use this block if the sidebar needs team/workspace switching, nested nav, or a search field built in",
+        "typical_content": [
+          "App logo or wordmark in SidebarHeader",
+          "Navigation links as SidebarMenuButton inside SidebarMenuItem",
+          "Links grouped by section using SidebarGroup + SidebarGroupLabel",
+          "User avatar and account DropdownMenu in SidebarFooter"
+        ],
+        "do_not_place": [
+          "Primary content",
+          "Forms",
+          "Data tables",
+          "Charts"
+        ]
+      },
+      "content-area": {
+        "role": "Primary view \u2014 changes on navigation",
+        "components": {
+          "page-header": "Plain flex header row with SidebarTrigger + heading",
+          "content-body": "Card, CardHeader, CardTitle, CardContent \u2014 primary grouping unit",
+          "data-display": "data-table block (via @/components/blocks/data-table) or Table + TableHeader + TableBody + TableRow + TableCell",
+          "empty-state": "Empty (from @/components/ui/empty)",
+          "loading": "Skeleton"
+        },
+        "typical_content": [
+          "Page heading as h1 or CardTitle",
+          "Primary action Button (one default variant per view)",
+          "Content pattern appropriate to the page: table, form, feed, or detail record"
+        ],
+        "do_not_place": [
+          "Persistent navigation",
+          "App-level controls"
+        ]
+      },
+      "detail-panel": {
+        "role": "Contextual overlay for a selected item \u2014 optional, does not replace content-area",
+        "components": {
+          "panel": "Sheet + SheetContent (side='right') + SheetHeader + SheetTitle + SheetDescription + SheetFooter",
+          "close": "SheetClose"
+        },
+        "typical_content": [
+          "Selected record detail in Card or plain layout",
+          "Edit form using Input, Textarea, Select, Label",
+          "Action buttons in SheetFooter"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "Unrelated content"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Always wrap the entire layout in SidebarProvider \u2014 Sidebar and SidebarTrigger depend on its context",
+      "SidebarTrigger must appear in the main content header so the user can collapse/expand the sidebar",
+      "The active SidebarMenuButton must reflect the current route \u2014 use a conditional className or data-active prop",
+      "The content-area is a single scroll region \u2014 do not nest a second overflow-y-auto container inside it without explicit need",
+      "On mobile viewports the Sidebar component handles collapse automatically \u2014 do not add custom mobile logic",
+      "The detail panel (Sheet) is additive \u2014 opening it must not remove or obscure the content-area",
+      "One default variant Button per visible area \u2014 all other actions use outline, ghost, or secondary variants"
+    ],
+    "agent_instructions": "Scaffold the SidebarProvider + Sidebar shell first, then infer 4\u20136 navigation items from the app description and populate SidebarMenu with them, grouped into 1\u20132 SidebarGroups. Set the first nav item as active. Populate the content-area with the most likely primary view for the app \u2014 if it manages data, use a Table or data-table block; if it is a productivity tool, use a Card-based layout. Place a user avatar with initials in SidebarFooter. Do not leave any zone empty \u2014 use realistic placeholder content. If the app description implies a detail view (clicking a row opens more info), implement it as a Sheet sliding in from the right."
+  },
+  {
+    "id": "dashboard",
+    "version": "1.0",
+    "display_name": "Dashboard / overview",
+    "layout_description": "A high-density overview page intended to surface the most important information about a system at a glance. The page does not support deep navigation within itself \u2014 it is a read-mostly summary, not an editing surface. The layout is divided into horizontal bands: a page header with title and time-range or filter controls, a row of metric cards showing key numbers, one or more chart regions showing trends or distributions, and optionally a compact table or activity feed at the bottom. Everything is visible without drilling down \u2014 the dashboard rewards scanning, not reading.",
+    "html_structure": "import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'\nimport { Button } from '@/components/ui/button'\nimport { Badge } from '@/components/ui/badge'\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'\nimport { Separator } from '@/components/ui/separator'\nimport { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'\nimport { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'\n\nexport default function App() {\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Page header */}\n      <header className=\"border-b px-6 py-3 flex items-center justify-between\">\n        <h1 className=\"text-lg font-bold font-heading\"><!-- Dashboard title --></h1>\n        <div className=\"flex items-center gap-3\">\n          {/* Time range or filter Select */}\n          <Select>\n            <SelectTrigger className=\"w-36\"><SelectValue placeholder=\"Last 30 days\" /></SelectTrigger>\n            <SelectContent>\n              <SelectItem value=\"7d\">Last 7 days</SelectItem>\n              <SelectItem value=\"30d\">Last 30 days</SelectItem>\n              <SelectItem value=\"90d\">Last 90 days</SelectItem>\n            </SelectContent>\n          </Select>\n        </div>\n      </header>\n\n      <main className=\"flex-1 p-6 max-w-6xl mx-auto w-full flex flex-col gap-6\">\n\n        {/* Stat cards */}\n        <div className=\"grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4\">\n          {/* Each stat: Card > CardHeader (label) + CardContent (value + delta Badge) */}\n        </div>\n\n        {/* Charts */}\n        <div className=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n          <Card>\n            <CardHeader>\n              <CardTitle><!-- Chart title --></CardTitle>\n            </CardHeader>\n            <CardContent>\n              <ChartContainer config={{}}>\n                {/* AreaChart or BarChart via recharts */}\n              </ChartContainer>\n            </CardContent>\n          </Card>\n        </div>\n\n        {/* Bottom table or activity feed (optional) */}\n        <Card>\n          <CardHeader><CardTitle><!-- Table title --></CardTitle></CardHeader>\n          <CardContent>\n            {/* Compact table or list of recent items */}\n          </CardContent>\n        </Card>\n\n      </main>\n    </div>\n  )\n}",
+    "zones": {
+      "page-header": {
+        "role": "Dashboard title and global controls",
+        "components": {
+          "title": "h1 with font-heading class",
+          "time-filter": "Select + SelectTrigger + SelectContent + SelectItem",
+          "secondary-action": "Button (outline or ghost variant only)"
+        },
+        "typical_content": [
+          "Dashboard title",
+          "Date range Select (Last 7 / 30 / 90 days)",
+          "Optional export or refresh Button"
+        ],
+        "do_not_place": [
+          "Navigation links",
+          "Forms",
+          "Charts"
+        ]
+      },
+      "stat-cards": {
+        "role": "Single key numbers \u2014 the most important metrics",
+        "components": {
+          "card": "Card + CardHeader + CardContent",
+          "label": "CardTitle with text-sm font-medium text-muted-foreground",
+          "value": "p with text-2xl font-bold",
+          "delta": "Badge (default variant for positive, secondary for neutral, destructive for negative) or plain p with text-green-600 / text-red-600"
+        },
+        "block_alternative": "section-cards block (from @/components/blocks/section-cards) \u2014 use when 4+ cards with consistent delta formatting are needed",
+        "typical_content": [
+          "3\u20135 cards: one per key metric relevant to the app domain",
+          "Each card: muted label + large value + optional delta vs previous period"
+        ],
+        "do_not_place": [
+          "Charts",
+          "Long text",
+          "Action buttons",
+          "More than 5 cards in a row"
+        ]
+      },
+      "chart-area": {
+        "role": "Trend and distribution visualisations",
+        "components": {
+          "wrapper": "ChartContainer (from @/components/ui/chart) \u2014 required, handles sizing and config",
+          "tooltip": "ChartTooltip + ChartTooltipContent",
+          "legend": "ChartLegend + ChartLegendContent",
+          "chart-types": "AreaChart, BarChart, LineChart, PieChart from recharts (recharts must be added as a dependency)"
+        },
+        "block_alternative": "chart-area-interactive block (from @/components/blocks/chart-area-interactive) \u2014 use for a pre-built interactive area chart with date range toggle",
+        "typical_content": [
+          "Line or area chart of a primary metric over time",
+          "Bar chart comparing categories or time periods"
+        ],
+        "do_not_place": [
+          "Tables",
+          "Forms",
+          "Navigation"
+        ],
+        "extra_dependencies": [
+          "recharts"
+        ]
+      },
+      "table-preview": {
+        "role": "Compact tabular summary \u2014 top-N or most recent items",
+        "components": {
+          "simple": "Table + TableHeader + TableBody + TableRow + TableHead + TableCell (from @/components/ui/table)",
+          "advanced": "data-table block (from @/components/blocks/data-table) \u2014 use when sorting, filtering, or pagination is needed",
+          "status-labels": "Badge"
+        },
+        "typical_content": [
+          "Last 5\u201310 events, transactions, or records",
+          "Status column using Badge",
+          "Link to full table view rather than paginating inline"
+        ],
+        "do_not_place": [
+          "Full paginated tables \u2014 link out to a dedicated table view instead"
+        ]
+      }
+    },
+    "extra_dependencies": [
+      "recharts"
+    ],
+    "constraints": [
+      "All data shown must be synchronously available on mount \u2014 no lazy-loaded drill-downs embedded in the dashboard itself",
+      "Stat cards must always show a label \u2014 never a raw number with no context",
+      "Charts must always be wrapped in ChartContainer \u2014 never use recharts components directly without it",
+      "Every zone needs an empty state using the Empty component if data is absent",
+      "Do not place primary create/edit actions on the dashboard \u2014 link out to dedicated views",
+      "Use hardcoded realistic sample data \u2014 not lorem ipsum numbers like 1234 or 9999",
+      "Avoid nesting more than two chart columns on narrow viewports \u2014 stack to a single column below 768px"
+    ],
+    "agent_instructions": "Identify the app domain from the description and infer 3\u20135 relevant metrics for the stat cards (e.g. for a finance app: Balance, Income, Expenses, Transactions this month). Generate realistic sample data arrays for charts \u2014 at least 7 data points for time series. Implement two charts: prefer an AreaChart for a time-series trend and a BarChart for a categorical comparison. Wrap both in ChartContainer with a config object. Populate the bottom table with 5\u20138 realistic rows relevant to the domain. Include a date-range Select in the header. Add recharts to dependencies."
+  },
+  {
+    "id": "wizard",
+    "version": "1.0",
+    "display_name": "Wizard / multi-step",
+    "layout_description": "A focused, single-task flow that guides the user through a sequence of steps to complete a goal. Each step occupies the full viewport and presents exactly one decision or input group \u2014 the user cannot see or interact with other steps until they complete the current one. A progress indicator at the top communicates position and total length. Navigation is linear: a primary CTA advances to the next step, a back control returns to the previous. The final step shows a confirmation summary before a submit action. The overall chrome is minimal \u2014 no sidebar, no persistent navigation.",
+    "html_structure": "import { useState } from 'react'\nimport { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'\nimport { Button } from '@/components/ui/button'\nimport { Progress } from '@/components/ui/progress'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'\nimport { Separator } from '@/components/ui/separator'\nimport { toast } from 'sonner'\n\nconst STEPS = [\n  { id: 'step-1', title: '<!-- Step 1 title -->' },\n  { id: 'step-2', title: '<!-- Step 2 title -->' },\n  { id: 'review', title: 'Review & confirm' },\n]\n\nexport default function App() {\n  const [step, setStep] = useState(0)\n\n  const isFirst = step === 0\n  const isLast = step === STEPS.length - 1\n  const progress = ((step + 1) / STEPS.length) * 100\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Progress header */}\n      <header className=\"px-6 py-4 border-b flex flex-col gap-3\">\n        <div className=\"flex items-center justify-between\">\n          <span className=\"text-sm text-muted-foreground\">\n            Step {step + 1} of {STEPS.length}\n          </span>\n          <span className=\"text-sm font-medium\">{STEPS[step].title}</span>\n        </div>\n        <Progress value={progress} className=\"h-1.5\" />\n      </header>\n\n      {/* Step content */}\n      <main className=\"flex-1 flex items-start justify-center py-12 px-6\">\n        <Card className=\"w-full max-w-lg\">\n          <CardHeader>\n            <CardTitle>{STEPS[step].title}</CardTitle>\n            <CardDescription><!-- Step guidance text --></CardDescription>\n          </CardHeader>\n          <CardContent className=\"flex flex-col gap-4\">\n            {/* Step-specific fields rendered conditionally on step index */}\n            {step === 0 && (\n              <>\n                {/* Step 1 fields */}\n              </>\n            )}\n            {step === 1 && (\n              <>\n                {/* Step 2 fields */}\n              </>\n            )}\n            {isLast && (\n              <>\n                {/* Review summary \u2014 list of collected values */}\n              </>\n            )}\n          </CardContent>\n          <CardFooter className=\"flex justify-between\">\n            <Button\n              variant=\"outline\"\n              onClick={() => setStep(s => s - 1)}\n              disabled={isFirst}\n            >\n              Back\n            </Button>\n            <Button\n              onClick={() => {\n                if (isLast) {\n                  toast.success('Submitted!')\n                } else {\n                  setStep(s => s + 1)\n                }\n              }}\n            >\n              {isLast ? '<!-- Submit label -->' : 'Continue'}\n            </Button>\n          </CardFooter>\n        </Card>\n      </main>\n\n    </div>\n  )\n}",
+    "zones": {
+      "progress-bar": {
+        "role": "Orientation \u2014 tells the user where they are and how much remains",
+        "components": {
+          "bar": "Progress (from @/components/ui/progress) \u2014 value is ((currentStep + 1) / totalSteps) * 100",
+          "step-counter": "Plain text: 'Step N of M' using text-sm text-muted-foreground",
+          "step-label": "Plain text showing current step title using text-sm font-medium"
+        },
+        "typical_content": [
+          "Step counter (Step 2 of 4)",
+          "Current step title",
+          "Progress bar showing percentage completion"
+        ],
+        "do_not_place": [
+          "Navigation links",
+          "Help text",
+          "Any interactive element other than an optional 'Save and exit' escape hatch"
+        ]
+      },
+      "step-header": {
+        "role": "Context for the current step",
+        "components": {
+          "title": "CardTitle",
+          "guidance": "CardDescription"
+        },
+        "typical_content": [
+          "Short imperative step title: 'Name your project', 'Choose a plan', 'Review your order'",
+          "One sentence of guidance in CardDescription"
+        ],
+        "do_not_place": [
+          "Fields",
+          "Multiple paragraphs of instruction"
+        ]
+      },
+      "step-body": {
+        "role": "The single task for this step \u2014 rendered conditionally based on step index",
+        "components": {
+          "field-group": "Label + Input (or Textarea, Select, RadioGroup, Checkbox) \u2014 each field wrapped in a div with flex flex-col gap-1.5",
+          "validated-fields": "Form + FormField + FormItem + FormLabel + FormControl + FormMessage (when using react-hook-form + zod)",
+          "choice-grid": "RadioGroup + RadioGroupItem for mutually exclusive options",
+          "review-summary": "Separator between sections, plain dl/dd or Key\u2013Value pairs using text-sm on the final step"
+        },
+        "typical_content": [
+          "2\u20135 tightly related form fields for one logical decision",
+          "A RadioGroup for single-choice selection steps",
+          "A confirmation summary listing all collected values on the final step"
+        ],
+        "do_not_place": [
+          "Fields from a different step",
+          "More than one distinct decision",
+          "Long scrollable content \u2014 split into additional steps instead"
+        ]
+      },
+      "cta-row": {
+        "role": "Linear navigation controls in CardFooter",
+        "components": {
+          "back": "Button with variant='outline' \u2014 disabled on step 0",
+          "next": "Button with default variant \u2014 label is 'Continue' on intermediate steps and the submit action label on the final step",
+          "feedback": "toast() from sonner on successful submission"
+        },
+        "typical_content": [
+          "Back button (outline, disabled on first step)",
+          "Continue / Submit button (default variant)"
+        ],
+        "do_not_place": [
+          "Secondary actions",
+          "Skip buttons",
+          "Help or support links"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "optional_dependencies": {
+      "react-hook-form + @hookform/resolvers + zod": "Add when steps have validation requirements beyond simple presence checks"
+    },
+    "constraints": [
+      "Each step must contain exactly one logical decision or input group \u2014 split rather than combine unrelated fields",
+      "Back must always restore the previous step's field values \u2014 store all form state at the top level, not inside individual step components",
+      "Progress value must be derived from step index and total count \u2014 never hardcoded",
+      "The final step must show a read-only summary of all collected values before the submit action",
+      "Validation errors must appear inline below the offending field using text-sm text-destructive \u2014 never block advancement with an AlertDialog",
+      "Do not render sidebar, navigation, or unrelated controls \u2014 the only escape is an explicit Cancel link or 'Save and exit' Button (ghost variant)",
+      "The submit Button on the final step must call toast.success() on completion and reset or redirect as appropriate"
+    ],
+    "agent_instructions": "Identify the wizard's goal from the app description (e.g. project creation, onboarding, checkout, booking). Break that goal into 3\u20135 logical steps, each containing one coherent group of fields or a single choice. Generate appropriate Label + Input / Select / RadioGroup fields for each step. The final step must be a review screen that renders all collected values as a read-only summary. Wire back/next with a single top-level useState for step index and a single state object for form values. Use toast.success() on submission. If any step has required fields, add inline validation using text-sm text-destructive error messages before advancing."
+  },
+  {
+    "id": "topnav-content",
+    "version": "1.0",
+    "display_name": "Top nav + content",
+    "layout_description": "A full-width horizontal navigation bar pinned to the top of the viewport, with the main content area filling the remaining height below. The nav bar contains the app logo on the left, primary navigation links in the centre or left cluster, and utility controls (search, user avatar, theme toggle) on the right. Unlike the sidebar pattern, this layout gives the content area the full page width \u2014 preferred for apps where horizontal space matters, such as developer tools, docs platforms, and marketing-adjacent dashboards. Sub-navigation (tabs or a secondary bar) can appear below the top nav to scope content within a section.",
+    "html_structure": "import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Button } from '@/components/ui/button'\nimport { Separator } from '@/components/ui/separator'\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'\nimport { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'\n\nexport default function App() {\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Top nav */}\n      <header className=\"border-b px-6 py-3 flex items-center justify-between gap-6\">\n        <div className=\"flex items-center gap-6\">\n          <span className=\"font-bold font-heading text-lg\"><!-- Logo --></span>\n          <NavigationMenu>\n            <NavigationMenuList>\n              <NavigationMenuItem>\n                <NavigationMenuLink className=\"px-3 py-2 text-sm\"><!-- Nav item --></NavigationMenuLink>\n              </NavigationMenuItem>\n            </NavigationMenuList>\n          </NavigationMenu>\n        </div>\n        <div className=\"flex items-center gap-3\">\n          {/* Search, notifications, theme toggle, avatar */}\n          <Avatar><AvatarFallback>U</AvatarFallback></Avatar>\n        </div>\n      </header>\n\n      {/* Optional sub-nav via Tabs */}\n      {/* <div className=\"border-b px-6\">\n        <Tabs defaultValue=\"overview\">\n          <TabsList className=\"bg-transparent border-none gap-0 h-auto rounded-none\">\n            <TabsTrigger value=\"overview\">Overview</TabsTrigger>\n          </TabsList>\n        </Tabs>\n      </div> */}\n\n      {/* Main content */}\n      <main className=\"flex-1 overflow-y-auto\">\n        <div className=\"max-w-6xl mx-auto px-6 py-6 flex flex-col gap-6\">\n          {/* Optional breadcrumb */}\n          <Breadcrumb>\n            <BreadcrumbList>\n              <BreadcrumbItem><BreadcrumbPage><!-- Page --></BreadcrumbPage></BreadcrumbItem>\n            </BreadcrumbList>\n          </Breadcrumb>\n          {/* Page content */}\n        </div>\n      </main>\n\n    </div>\n  )\n}",
+    "zones": {
+      "topnav": {
+        "role": "App identity and primary navigation",
+        "components": {
+          "logo": "span with font-bold font-heading",
+          "nav-links": "NavigationMenu + NavigationMenuList + NavigationMenuItem + NavigationMenuLink",
+          "search": "Input with search icon, or CommandDialog triggered by Button with Kbd shortcut",
+          "user-menu": "DropdownMenu + DropdownMenuTrigger wrapping Avatar + AvatarFallback",
+          "theme-toggle": "Button (ghost, icon-only) calling toggleMode()"
+        },
+        "block_alternative": "site-header block (from @/components/blocks/site-header) \u2014 use when a pre-built responsive header with mobile hamburger is needed",
+        "typical_content": [
+          "Logo or wordmark left-aligned",
+          "3\u20136 NavigationMenuLink items for primary sections",
+          "Avatar with DropdownMenu for account actions right-aligned"
+        ],
+        "do_not_place": [
+          "Primary content",
+          "Forms",
+          "Long text"
+        ]
+      },
+      "sub-nav": {
+        "role": "Secondary scoping within a section \u2014 optional",
+        "components": {
+          "tabs": "Tabs + TabsList + TabsTrigger + TabsContent",
+          "menubar": "Menubar + MenubarMenu + MenubarTrigger + MenubarContent + MenubarItem \u2014 use for app-menu-style sub-navigation"
+        },
+        "typical_content": [
+          "Section tabs: Overview, Settings, Members, Logs",
+          "Filter tabs: All, Active, Archived"
+        ],
+        "do_not_place": [
+          "Navigation already covered by topnav"
+        ]
+      },
+      "content-area": {
+        "role": "Primary view \u2014 scrollable, max-width constrained",
+        "components": {
+          "breadcrumb": "Breadcrumb + BreadcrumbList + BreadcrumbItem + BreadcrumbPage + BreadcrumbSeparator",
+          "content-body": "Card + CardHeader + CardContent \u2014 primary grouping unit",
+          "data": "Table or data-table block",
+          "empty": "Empty component",
+          "loading": "Skeleton"
+        },
+        "typical_content": [
+          "Optional Breadcrumb for deep pages",
+          "Page heading + primary action Button",
+          "Content pattern appropriate to the section"
+        ],
+        "do_not_place": [
+          "Navigation"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "NavigationMenu items must reflect real sections of the app \u2014 do not use placeholder names like 'Page 1'",
+      "The active nav item must be visually indicated \u2014 use a className or data-active approach",
+      "Keep the topnav to a single row \u2014 never wrap nav items to a second line",
+      "Max-width the content area with max-w-6xl mx-auto to prevent line lengths becoming too wide",
+      "On mobile, replace NavigationMenu with a Sheet-based drawer triggered by a hamburger Button",
+      "One default variant Button per visible content area"
+    ],
+    "agent_instructions": "Infer 3\u20135 primary navigation sections from the app description and populate NavigationMenuList with NavigationMenuLink items. Mark the first item active. If the app has sub-sections within a primary section, implement sub-navigation using Tabs. Add an Avatar with DropdownMenu for account actions. Populate the content area with the most relevant primary view. Include a Breadcrumb if the app has more than one level of navigation depth."
+  },
+  {
+    "id": "master-detail",
+    "version": "1.0",
+    "display_name": "Master-detail",
+    "layout_description": "A two-panel layout where a scrollable list or table on the left drives a detail view on the right. Selecting an item in the left panel updates the right panel without navigating away. The left panel is typically narrower (one-third or fixed width) and contains a searchable, filterable list of items. The right panel fills the remaining width and shows the full record for the selected item, including editable fields, related data, and actions. On mobile, the panels stack: the list is the default view, and selecting an item pushes the detail view full-screen.",
+    "html_structure": "import { useState } from 'react'\nimport { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Input } from '@/components/ui/input'\nimport { Badge } from '@/components/ui/badge'\nimport { Separator } from '@/components/ui/separator'\nimport { Button } from '@/components/ui/button'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { cn } from '@/lib/utils'\n\nexport default function App() {\n  const [selected, setSelected] = useState(null)\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Optional top bar */}\n      <header className=\"border-b px-6 py-3 flex items-center justify-between\">\n        <span className=\"font-bold font-heading\"><!-- App name --></span>\n      </header>\n\n      <ResizablePanelGroup direction=\"horizontal\" className=\"flex-1\">\n\n        {/* List panel */}\n        <ResizablePanel defaultSize={35} minSize={25} maxSize={50}>\n          <div className=\"flex flex-col h-full\">\n            <div className=\"px-4 py-3 border-b\">\n              <Input placeholder=\"Search...\" />\n            </div>\n            <ScrollArea className=\"flex-1\">\n              <div className=\"flex flex-col\">\n                {/* List items \u2014 each a button/div with onClick */}\n              </div>\n            </ScrollArea>\n          </div>\n        </ResizablePanel>\n\n        <ResizableHandle />\n\n        {/* Detail panel */}\n        <ResizablePanel defaultSize={65}>\n          <ScrollArea className=\"h-full\">\n            {selected ? (\n              <div className=\"p-6 flex flex-col gap-6\">\n                {/* Detail content */}\n              </div>\n            ) : (\n              <div className=\"h-full flex items-center justify-center\">\n                {/* Empty \u2014 nothing selected */}\n              </div>\n            )}\n          </ScrollArea>\n        </ResizablePanel>\n\n      </ResizablePanelGroup>\n    </div>\n  )\n}",
+    "zones": {
+      "list-panel": {
+        "role": "Scrollable, searchable item list \u2014 drives selection",
+        "components": {
+          "search": "Input with placeholder 'Search...'",
+          "scroll": "ScrollArea + ScrollBar wrapping the list",
+          "list-item": "Plain div or button with cn() for selected state (bg-accent), containing item name, subtitle, and optional Badge",
+          "filter-tabs": "Tabs + TabsList + TabsTrigger above the list if filtering by status is needed"
+        },
+        "typical_content": [
+          "Search Input at the top of the panel",
+          "Scrollable list of items, each showing name + subtitle + status Badge",
+          "Selected item highlighted with bg-accent"
+        ],
+        "do_not_place": [
+          "Primary actions",
+          "Forms",
+          "Charts"
+        ]
+      },
+      "detail-panel": {
+        "role": "Full record view for the selected item",
+        "components": {
+          "header": "Avatar (for people) or icon + heading + Badge for status",
+          "fields": "Card + CardContent with Label + value pairs, or editable Input / Select / Textarea fields",
+          "actions": "Button group (default primary action + outline secondary actions)",
+          "tabs": "Tabs + TabsList + TabsTrigger + TabsContent \u2014 use when the detail view has multiple sub-sections (Details, Activity, Related)",
+          "related-list": "Table or plain list of related items",
+          "empty-state": "Empty component centred in the panel when nothing is selected"
+        },
+        "typical_content": [
+          "Record header: avatar or icon, name, status Badge",
+          "Detail fields in a Card",
+          "Action buttons: primary (Save / Send / Approve) + secondary (Edit / Delete)",
+          "Optional tabbed sub-sections for Activity, Notes, or Related items"
+        ],
+        "do_not_place": [
+          "List of all items",
+          "Navigation"
+        ]
+      }
+    },
+    "extra_dependencies": [
+      "react-resizable-panels"
+    ],
+    "constraints": [
+      "Always wrap panels in ResizablePanelGroup \u2014 this gives the user control over the split ratio",
+      "The detail panel must render an Empty state when no item is selected \u2014 never show a blank white panel",
+      "Selected state must be stored at the top level (App.tsx), not inside the list component",
+      "ScrollArea must wrap both the list and the detail content independently \u2014 they scroll separately",
+      "On mobile (below md breakpoint), hide the ResizableHandle and stack panels: list visible by default, detail view on selection",
+      "List items must be keyboard-accessible \u2014 use button elements, not divs"
+    ],
+    "agent_instructions": "Generate 8\u201312 realistic sample items appropriate to the app domain (e.g. contacts, emails, issues, orders). Implement selected state at the top level. Render the list panel with a search Input that filters items by name client-side. Highlight the selected item with bg-accent. In the detail panel, show a full record view for the selected item including all relevant fields. Add an Empty component when nothing is selected. If the detail has natural sub-sections (e.g. Details + Activity), use Tabs. Add react-resizable-panels to dependencies."
+  },
+  {
+    "id": "canvas-workspace",
+    "version": "1.0",
+    "display_name": "Canvas / workspace",
+    "layout_description": "An infinite or large-area canvas surrounded by floating toolbars. Unlike other templates, the canvas is the primary content \u2014 it is not a region inside a layout, it IS the layout. A left toolbar holds drawing or editing tools. A top toolbar holds global actions and view controls. A right panel holds properties for the selected element. The canvas itself is a free-form space where content is positioned absolutely or rendered via a scene graph. This template is appropriate for diagram editors, whiteboard tools, visual builders, and node-based editors.",
+    "html_structure": "import { useState } from 'react'\nimport { Toggle, ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'\nimport { Button } from '@/components/ui/button'\nimport { Separator } from '@/components/ui/separator'\nimport { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Slider } from '@/components/ui/slider'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\n\nexport default function App() {\n  const [zoom, setZoom] = useState(100)\n  const [activeTool, setActiveTool] = useState('select')\n\n  return (\n    <TooltipProvider>\n    <div className=\"min-h-screen flex flex-col overflow-hidden\">\n\n      {/* Top toolbar */}\n      <header className=\"border-b px-4 py-2 flex items-center justify-between gap-4 shrink-0\">\n        <div className=\"flex items-center gap-2\">\n          <span className=\"font-bold font-heading text-sm\"><!-- App name --></span>\n          <Separator orientation=\"vertical\" className=\"h-5\" />\n          {/* File actions: New, Open, Save */}\n          <Button variant=\"ghost\" size=\"sm\">Save</Button>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          {/* Zoom control */}\n          <span className=\"text-sm text-muted-foreground w-10 text-right\">{zoom}%</span>\n          <Slider value={[zoom]} onValueChange={([v]) => setZoom(v)} min={25} max={200} step={5} className=\"w-28\" />\n        </div>\n      </header>\n\n      <div className=\"flex flex-1 overflow-hidden\">\n\n        {/* Left tool palette */}\n        <aside className=\"border-r px-2 py-3 flex flex-col gap-1 shrink-0\">\n          <ToggleGroup type=\"single\" value={activeTool} onValueChange={v => v && setActiveTool(v)} orientation=\"vertical\">\n            <Tooltip><TooltipTrigger asChild>\n              <ToggleGroupItem value=\"select\" size=\"sm\"><!-- Icon --></ToggleGroupItem>\n            </TooltipTrigger><TooltipContent side=\"right\">Select</TooltipContent></Tooltip>\n          </ToggleGroup>\n        </aside>\n\n        {/* Canvas */}\n        <main className=\"flex-1 overflow-hidden relative bg-muted/30\">\n          {/* Canvas content rendered here \u2014 absolutely positioned elements or SVG/canvas */}\n          <div className=\"w-full h-full\" style={{cursor: activeTool === 'select' ? 'default' : 'crosshair'}}>\n          </div>\n        </main>\n\n        {/* Right properties panel */}\n        <aside className=\"border-l w-56 shrink-0 flex flex-col\">\n          <div className=\"px-4 py-3 border-b\">\n            <span className=\"text-sm font-medium\">Properties</span>\n          </div>\n          <ScrollArea className=\"flex-1\">\n            <div className=\"px-4 py-3 flex flex-col gap-4\">\n              {/* Selected element properties */}\n            </div>\n          </ScrollArea>\n        </aside>\n\n      </div>\n    </div>\n    </TooltipProvider>\n  )\n}",
+    "zones": {
+      "toolbar-top": {
+        "role": "Global actions and view controls",
+        "components": {
+          "file-actions": "Button (ghost, sm) for Save / Export / Undo / Redo",
+          "zoom": "Slider for zoom level + span showing current percentage",
+          "view-toggles": "ToggleGroup for grid/snap/ruler visibility"
+        },
+        "typical_content": [
+          "App name or file name",
+          "Save, Export buttons",
+          "Zoom slider with percentage readout",
+          "Undo / Redo buttons"
+        ],
+        "do_not_place": [
+          "Drawing tools (those go in the left toolbar)",
+          "Properties (those go in the right panel)"
+        ]
+      },
+      "toolbar-left": {
+        "role": "Drawing and editing tool selection",
+        "components": {
+          "tools": "ToggleGroup (type='single', orientation='vertical') + ToggleGroupItem for each tool",
+          "tooltips": "Tooltip + TooltipTrigger + TooltipContent wrapping each ToggleGroupItem \u2014 always include, as tools are icon-only",
+          "separator": "Separator between tool groups"
+        },
+        "typical_content": [
+          "Select tool",
+          "Shape tools (rectangle, ellipse, line)",
+          "Text tool",
+          "Pan/hand tool"
+        ],
+        "do_not_place": [
+          "File actions",
+          "Properties",
+          "Text labels on buttons \u2014 use Tooltip instead"
+        ]
+      },
+      "canvas": {
+        "role": "The primary interactive surface",
+        "components": {
+          "surface": "div with relative positioning, overflow-hidden, bg-muted/30 \u2014 canvas elements absolutely positioned inside",
+          "cursor": "cursor-default for select tool, cursor-crosshair for drawing tools via cn()"
+        },
+        "typical_content": [
+          "Absolutely positioned Card elements for node-based editors",
+          "SVG layer for connectors / drawing",
+          "Grid background pattern via Tailwind bg utilities"
+        ],
+        "do_not_place": [
+          "Fixed UI controls \u2014 those go in toolbars or the properties panel"
+        ]
+      },
+      "properties-panel": {
+        "role": "Context-sensitive properties for the selected element",
+        "components": {
+          "scroll": "ScrollArea wrapping panel content",
+          "fields": "Label + Input, Label + Select, Label + Slider for individual properties",
+          "color": "Input type='color' wrapped with Label",
+          "separator": "Separator between property groups"
+        },
+        "typical_content": [
+          "Position (X, Y) inputs",
+          "Size (W, H) inputs",
+          "Style properties: fill colour, stroke, opacity",
+          "Empty state when nothing is selected: text-sm text-muted-foreground"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "File actions"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "optional_dependencies": {
+      "@dnd-kit/core + @dnd-kit/sortable": "Add when canvas elements need drag-to-reposition support"
+    },
+    "constraints": [
+      "The outer container must be overflow-hidden \u2014 the canvas must not cause the page to scroll",
+      "Always wrap tool buttons in Tooltip so icon-only controls are accessible",
+      "The active tool must be reflected in canvas cursor style using cn()",
+      "ToggleGroup for tools must use type='single' so only one tool is active at a time",
+      "The properties panel must show a clear empty state when no element is selected",
+      "Zoom must be controlled via Slider with min=25, max=200, step=5 \u2014 display the value as an integer percentage"
+    ],
+    "agent_instructions": "Infer what kind of canvas app this is (diagram editor, whiteboard, node editor, visual builder) from the description. Implement a tool palette with at least a Select tool and 2\u20133 domain-appropriate drawing or editing tools using ToggleGroup. Wrap all tool buttons in Tooltip. Implement zoom state with a Slider. Render 3\u20135 sample elements on the canvas as positioned Cards or divs to demonstrate the layout is working. Populate the properties panel with fields relevant to the selected element type. The canvas cursor must change based on the active tool."
+  },
+  {
+    "id": "feed",
+    "version": "1.0",
+    "display_name": "Feed / timeline",
+    "layout_description": "A single scrollable column of homogeneous items \u2014 posts, events, notifications, or log entries \u2014 presented in reverse chronological order. A compose or create action is available at the top or via a prominent button. Filter controls let the user scope the feed by type, author, or date. Each item in the feed is a self-contained card with consistent structure: avatar or icon, author or source, timestamp, content body, and optional action row. The feed has a constrained max-width to maintain readable line lengths. A sidebar for navigation or supplementary info is optional.",
+    "html_structure": "import { useState } from 'react'\nimport { Card, CardContent } from '@/components/ui/card'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Button } from '@/components/ui/button'\nimport { Textarea } from '@/components/ui/textarea'\nimport { Badge } from '@/components/ui/badge'\nimport { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Separator } from '@/components/ui/separator'\n\nexport default function App() {\n  const [filter, setFilter] = useState('all')\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Top bar */}\n      <header className=\"border-b px-6 py-3 flex items-center justify-between\">\n        <span className=\"font-bold font-heading\"><!-- Feed title --></span>\n      </header>\n\n      <main className=\"flex-1 max-w-2xl mx-auto w-full px-4 py-6 flex flex-col gap-4\">\n\n        {/* Compose area */}\n        <Card>\n          <CardContent className=\"pt-4 flex flex-col gap-3\">\n            <Textarea placeholder=\"What's happening?\" rows={3} />\n            <div className=\"flex justify-end\">\n              <Button>Post</Button>\n            </div>\n          </CardContent>\n        </Card>\n\n        {/* Filter tabs */}\n        <Tabs value={filter} onValueChange={setFilter}>\n          <TabsList>\n            <TabsTrigger value=\"all\">All</TabsTrigger>\n            <TabsTrigger value=\"following\">Following</TabsTrigger>\n            <TabsTrigger value=\"mentions\">Mentions</TabsTrigger>\n          </TabsList>\n        </Tabs>\n\n        {/* Feed items */}\n        <div className=\"flex flex-col gap-3\">\n          {/* FeedItem component */}\n          <Card>\n            <CardContent className=\"pt-4 flex gap-3\">\n              <Avatar className=\"shrink-0\"><AvatarFallback>U</AvatarFallback></Avatar>\n              <div className=\"flex flex-col gap-1 flex-1\">\n                <div className=\"flex items-center gap-2\">\n                  <span className=\"font-medium text-sm\"><!-- Author --></span>\n                  <span className=\"text-xs text-muted-foreground\"><!-- Timestamp --></span>\n                </div>\n                <p className=\"text-sm\"><!-- Content --></p>\n                <div className=\"flex gap-2 mt-1\">\n                  <Button variant=\"ghost\" size=\"sm\"><!-- Action --></Button>\n                </div>\n              </div>\n            </CardContent>\n          </Card>\n        </div>\n\n      </main>\n    </div>\n  )\n}",
+    "zones": {
+      "compose-bar": {
+        "role": "Create new feed item",
+        "components": {
+          "input": "Textarea for multi-line post content, or Input for single-line entries",
+          "submit": "Button (default variant) \u2014 one per compose area",
+          "wrapper": "Card + CardContent"
+        },
+        "typical_content": [
+          "Textarea with contextual placeholder",
+          "Submit Button right-aligned in CardContent"
+        ],
+        "do_not_place": [
+          "Feed items",
+          "Filters"
+        ]
+      },
+      "filter-bar": {
+        "role": "Scope the feed by category or relationship",
+        "components": {
+          "tabs": "Tabs + TabsList + TabsTrigger \u2014 preferred for 2\u20135 named filters",
+          "toggle-group": "ToggleGroup + ToggleGroupItem \u2014 use for icon-based view toggles (list vs compact)"
+        },
+        "typical_content": [
+          "All / Following / Mentions tabs",
+          "All / Unread / Starred tabs"
+        ],
+        "do_not_place": [
+          "Compose controls",
+          "Feed items"
+        ]
+      },
+      "feed-items": {
+        "role": "The scrollable list of content items",
+        "components": {
+          "item-card": "Card + CardContent \u2014 one per feed item",
+          "avatar": "Avatar + AvatarFallback (or AvatarImage) for author identity",
+          "status": "Badge for item type or category",
+          "actions": "Button (ghost, sm) for like, reply, share, or domain-equivalent actions",
+          "empty": "Empty component when feed is empty or filter returns no results",
+          "loading": "Skeleton matching the Card + Avatar layout"
+        },
+        "typical_content": [
+          "Avatar + author name + relative timestamp",
+          "Content body as p with text-sm",
+          "Optional Badge for item type",
+          "Action row: ghost Buttons for domain-appropriate interactions"
+        ],
+        "do_not_place": [
+          "Compose UI inside feed items",
+          "Navigation"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Constrain the feed column to max-w-2xl mx-auto \u2014 never let items stretch full page width",
+      "Feed items must be in reverse chronological order (newest first)",
+      "Each feed item must have consistent structure: avatar + author + timestamp + content + actions",
+      "The compose area must appear above the filter bar, which appears above the feed",
+      "Filter tab changes must update the visible items client-side without a reload",
+      "Use realistic sample content \u2014 not 'Lorem ipsum post content'"
+    ],
+    "agent_instructions": "Infer the feed's content type from the app description (posts, activity events, log entries, notifications). Generate 6\u20138 realistic sample items with varied content and timestamps. Implement filter tabs that show relevant subsets. Build a compose area with Textarea and a submit Button that prepends a new item to the feed. Use Avatar + AvatarFallback with initials for each item author. Add domain-appropriate ghost Button actions per item (e.g. Like + Reply for social, Resolve + Assign for activity feeds)."
+  },
+  {
+    "id": "data-grid",
+    "version": "1.0",
+    "display_name": "Table / data grid",
+    "layout_description": "A full-width data table is the primary content of this layout. Above the table, a toolbar provides search, filter controls, and a primary action to create new records. Column headers are sortable. Rows are selectable, and a bulk action bar appears when rows are selected. Pagination sits below the table. The table can optionally support row expansion for inline detail, or a click-through that opens the master-detail or Sheet pattern. The outer shell can be the full page or nested inside a sidebar-content layout.",
+    "html_structure": "import { useState } from 'react'\nimport { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table'\nimport { Input } from '@/components/ui/input'\nimport { Button } from '@/components/ui/button'\nimport { Badge } from '@/components/ui/badge'\nimport { Checkbox } from '@/components/ui/checkbox'\nimport { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu'\nimport { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'\nimport { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink } from '@/components/ui/pagination'\n\nexport default function App() {\n  const [search, setSearch] = useState('')\n  const [selected, setSelected] = useState([])\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      <header className=\"border-b px-6 py-3 flex items-center justify-between\">\n        <span className=\"font-bold font-heading\"><!-- Table title --></span>\n      </header>\n\n      <main className=\"flex-1 px-6 py-6 flex flex-col gap-4\">\n\n        {/* Toolbar */}\n        <div className=\"flex items-center justify-between gap-3\">\n          <div className=\"flex items-center gap-3\">\n            <Input placeholder=\"Search...\" value={search} onChange={e => setSearch(e.target.value)} className=\"w-64\" />\n            <Select>\n              <SelectTrigger className=\"w-36\"><SelectValue placeholder=\"Filter by status\" /></SelectTrigger>\n              <SelectContent>\n                <SelectItem value=\"all\">All</SelectItem>\n                {/* status options */}\n              </SelectContent>\n            </Select>\n          </div>\n          <Button><!-- Primary action --></Button>\n        </div>\n\n        {/* Bulk action bar \u2014 visible when rows selected */}\n        {selected.length > 0 && (\n          <div className=\"flex items-center gap-3 px-4 py-2 bg-muted rounded-md\">\n            <span className=\"text-sm\">{selected.length} selected</span>\n            <Button variant=\"outline\" size=\"sm\"><!-- Bulk action --></Button>\n          </div>\n        )}\n\n        {/* Table */}\n        <div className=\"border rounded-lg overflow-hidden\">\n          <Table>\n            <TableHeader>\n              <TableRow>\n                <TableHead className=\"w-10\"><Checkbox /></TableHead>\n                {/* Column headers */}\n              </TableRow>\n            </TableHeader>\n            <TableBody>\n              {/* Rows */}\n              <TableRow>\n                <TableCell><Checkbox /></TableCell>\n                {/* Cells */}\n              </TableRow>\n            </TableBody>\n          </Table>\n        </div>\n\n        {/* Pagination */}\n        <Pagination>\n          <PaginationContent>\n            <PaginationItem><PaginationPrevious href=\"#\" /></PaginationItem>\n            <PaginationItem><PaginationLink href=\"#\" isActive>1</PaginationLink></PaginationItem>\n            <PaginationItem><PaginationNext href=\"#\" /></PaginationItem>\n          </PaginationContent>\n        </Pagination>\n\n      </main>\n    </div>\n  )\n}",
+    "zones": {
+      "toolbar": {
+        "role": "Table-level controls: search, filter, and primary record creation action",
+        "components": {
+          "search": "Input with placeholder 'Search...' and controlled value",
+          "filter": "Select + SelectTrigger + SelectContent + SelectItem for status/category filtering",
+          "primary-action": "Button (default variant) \u2014 'New X', 'Add X', 'Create X'",
+          "secondary-actions": "Button (outline) or DropdownMenu for export, import, bulk operations"
+        },
+        "block_alternative": "data-table block (from @/components/blocks/data-table) \u2014 provides a fully wired toolbar, column visibility toggle, and sorting out of the box via @tanstack/react-table. Use for production-quality tables with complex requirements.",
+        "typical_content": [
+          "Search Input left-aligned",
+          "Status filter Select",
+          "Primary 'New record' Button right-aligned"
+        ],
+        "do_not_place": [
+          "Table content",
+          "Pagination"
+        ]
+      },
+      "table-header": {
+        "role": "Column headers with sort controls",
+        "components": {
+          "header-row": "TableHeader + TableRow + TableHead",
+          "sort-button": "Button (ghost, size='sm') inside TableHead with sort icon and onClick handler",
+          "select-all": "Checkbox in first TableHead column for row selection"
+        },
+        "typical_content": [
+          "Checkbox column for row selection",
+          "Data columns with sortable TableHead",
+          "Actions column right-aligned (typically no header label)"
+        ],
+        "do_not_place": [
+          "Filter controls \u2014 those go in the toolbar above"
+        ]
+      },
+      "table-body": {
+        "role": "Data rows",
+        "components": {
+          "row": "TableRow with hover:bg-muted/50",
+          "cell": "TableCell",
+          "status-cell": "Badge inside TableCell for status values",
+          "row-checkbox": "Checkbox in first TableCell for individual row selection",
+          "row-actions": "DropdownMenu + DropdownMenuTrigger (three-dot icon Button) + DropdownMenuContent + DropdownMenuItem in last TableCell",
+          "empty": "TableRow with single TableCell colSpan={columnCount} containing Empty component"
+        },
+        "typical_content": [
+          "Row checkbox",
+          "Data cells with appropriate typography (font-medium for primary identifier, text-muted-foreground for secondary)",
+          "Status Badge",
+          "Three-dot DropdownMenu for row actions (Edit, Delete, etc.)"
+        ],
+        "do_not_place": [
+          "Bulk controls \u2014 those go in the bulk action bar"
+        ]
+      },
+      "pagination": {
+        "role": "Page navigation",
+        "components": {
+          "pagination": "Pagination + PaginationContent + PaginationItem + PaginationPrevious + PaginationNext + PaginationLink + PaginationEllipsis"
+        },
+        "typical_content": [
+          "Previous / Next controls",
+          "Numbered page links",
+          "PaginationEllipsis for large page counts"
+        ],
+        "do_not_place": [
+          "Filter controls",
+          "Row count info \u2014 place that as plain text next to the Pagination component"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "optional_dependencies": {
+      "@tanstack/react-table": "Add when using the data-table block, or when column sorting/filtering/visibility needs to be production-quality"
+    },
+    "constraints": [
+      "Wrap the Table in a border rounded-lg overflow-hidden div so the table has visible containment",
+      "Always include a row checkbox column and a bulk action bar that appears when rows are selected",
+      "Status values must use Badge, not plain text",
+      "Row actions must use a DropdownMenu \u2014 never expose Delete as a bare button in the row",
+      "The empty state (no rows matching search/filter) must render inside the TableBody, not replace the table",
+      "Client-side filtering: implement search and status filter as controlled state that filters the sample data array"
+    ],
+    "agent_instructions": "Identify the data entity from the app description (users, orders, tasks, products, etc.). Define 5\u20137 relevant columns and generate 10\u201315 realistic sample rows. Implement client-side search filtering on the primary identifier column. Implement a status filter Select with domain-appropriate values. Add row-level DropdownMenu actions (at minimum Edit and Delete). Implement checkbox selection with a bulk action bar. Wrap in Pagination (client-side, 10 rows per page). Use the data-table block if the app description implies complex table requirements like column visibility or advanced sorting."
+  },
+  {
+    "id": "split-input",
+    "version": "1.0",
+    "display_name": "Split input / preview",
+    "layout_description": "A two-pane layout with an editor or input area on the left and a live rendered preview on the right. The two panes are separated by a draggable ResizableHandle. The left pane is for authoring \u2014 text, code, form fields, or a structured editor. The right pane shows the rendered or processed output in real time as the user types or makes changes. A toolbar at the top provides file-level actions (save, export, format) and view controls (toggle preview, swap panes). Used for Markdown editors, email builders, code playgrounds, template editors, and configuration tools.",
+    "html_structure": "import { useState } from 'react'\nimport { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable'\nimport { Textarea } from '@/components/ui/textarea'\nimport { Button } from '@/components/ui/button'\nimport { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Separator } from '@/components/ui/separator'\nimport { Badge } from '@/components/ui/badge'\n\nexport default function App() {\n  const [source, setSource] = useState('')\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Toolbar */}\n      <header className=\"border-b px-4 py-2 flex items-center justify-between gap-4 shrink-0\">\n        <div className=\"flex items-center gap-2\">\n          <span className=\"font-bold font-heading text-sm\"><!-- App name --></span>\n          <Separator orientation=\"vertical\" className=\"h-4\" />\n          <Button variant=\"ghost\" size=\"sm\">Save</Button>\n          <Button variant=\"ghost\" size=\"sm\">Export</Button>\n        </div>\n        <div className=\"flex items-center gap-2\">\n          <Badge variant=\"secondary\"><!-- File name or status --></Badge>\n        </div>\n      </header>\n\n      {/* Split panes */}\n      <ResizablePanelGroup direction=\"horizontal\" className=\"flex-1\">\n\n        {/* Editor pane */}\n        <ResizablePanel defaultSize={50} minSize={30}>\n          <div className=\"h-full flex flex-col\">\n            <div className=\"border-b px-4 py-2\">\n              <span className=\"text-xs font-medium text-muted-foreground uppercase tracking-wide\">Editor</span>\n            </div>\n            <Textarea\n              value={source}\n              onChange={e => setSource(e.target.value)}\n              className=\"flex-1 resize-none rounded-none border-0 font-mono text-sm focus-visible:ring-0\"\n              placeholder=\"Start typing...\"\n            />\n          </div>\n        </ResizablePanel>\n\n        <ResizableHandle />\n\n        {/* Preview pane */}\n        <ResizablePanel defaultSize={50} minSize={30}>\n          <div className=\"h-full flex flex-col\">\n            <div className=\"border-b px-4 py-2\">\n              <span className=\"text-xs font-medium text-muted-foreground uppercase tracking-wide\">Preview</span>\n            </div>\n            <ScrollArea className=\"flex-1\">\n              <div className=\"p-6\">\n                {/* Rendered output derived from source */}\n              </div>\n            </ScrollArea>\n          </div>\n        </ResizablePanel>\n\n      </ResizablePanelGroup>\n    </div>\n  )\n}",
+    "zones": {
+      "toolbar": {
+        "role": "File actions and view controls",
+        "components": {
+          "file-actions": "Button (ghost, sm) for Save / Export / Format / Clear",
+          "status": "Badge (secondary) for file name, word count, or save status",
+          "view-toggle": "Tabs or ToggleGroup to switch between Edit-only / Split / Preview-only modes"
+        },
+        "typical_content": [
+          "App name or file name",
+          "Save and Export buttons",
+          "Optional status Badge (e.g. 'Saved', 'Modified')"
+        ],
+        "do_not_place": [
+          "Editor content",
+          "Preview content"
+        ]
+      },
+      "editor-pane": {
+        "role": "Authoring surface \u2014 where the user creates or edits content",
+        "components": {
+          "simple-editor": "Textarea with font-mono text-sm, resize-none, border-0, full height",
+          "rich-editor": "Multiple Input / Textarea / Select fields in a form layout \u2014 use when the input is structured (template fields, config, form builder)",
+          "pane-label": "span with text-xs font-medium text-muted-foreground uppercase tracking-wide in a border-b header row"
+        },
+        "typical_content": [
+          "Textarea for Markdown, code, or plain text authoring",
+          "Structured form fields for template or config editing"
+        ],
+        "do_not_place": [
+          "Preview output",
+          "File actions"
+        ]
+      },
+      "preview-pane": {
+        "role": "Live rendered output derived from the editor state",
+        "components": {
+          "scroll": "ScrollArea wrapping the preview content",
+          "rendered-output": "div with prose styling for Markdown, or live component render for template preview",
+          "pane-label": "span with text-xs font-medium text-muted-foreground uppercase tracking-wide in a border-b header row",
+          "empty": "Centered text-muted-foreground message when source is empty"
+        },
+        "typical_content": [
+          "Rendered HTML from Markdown source",
+          "Live preview of a template or email layout",
+          "Formatted output of code or config"
+        ],
+        "do_not_place": [
+          "Editing controls",
+          "Toolbar actions"
+        ]
+      }
+    },
+    "extra_dependencies": [
+      "react-resizable-panels"
+    ],
+    "constraints": [
+      "The preview must update reactively as the source state changes \u2014 no manual refresh button",
+      "Textarea in the editor pane must have resize-none and border-0 with focus-visible:ring-0 to feel embedded",
+      "Both panes must scroll independently via their own overflow or ScrollArea",
+      "The outer container must be overflow-hidden with flex-1 on the ResizablePanelGroup to fill the viewport",
+      "For Markdown preview, use dangerouslySetInnerHTML only with sanitised content \u2014 prefer a simple custom renderer for sample purposes"
+    ],
+    "agent_instructions": "Identify the editor type from the app description (Markdown, code, email template, config, etc.). Pre-populate the source Textarea with a realistic example relevant to the domain. Implement the preview pane to render the source content live: for Markdown use a simple custom renderer or dangerouslySetInnerHTML with basic HTML transformation; for code use a pre + code block; for templates render the interpolated output. Add Save and Export (copy to clipboard) buttons in the toolbar. Add react-resizable-panels to dependencies."
+  },
+  {
+    "id": "chat-conversation",
+    "version": "1.0",
+    "display_name": "Chat / conversation",
+    "layout_description": "A scrollable message thread with a pinned composer at the bottom. Messages alternate between user and assistant (or participant) sides, with clear visual distinction between sender roles. A session list sidebar on the left enables multi-conversation apps \u2014 clicking a session loads that thread. The composer supports multi-line input and a send action. The message list auto-scrolls to the latest message on new input. This template covers AI chat interfaces, support chat tools, team messaging channels, and any turn-based conversation UI.",
+    "html_structure": "import { useState, useRef, useEffect } from 'react'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Textarea } from '@/components/ui/textarea'\nimport { Button } from '@/components/ui/button'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Separator } from '@/components/ui/separator'\nimport { Badge } from '@/components/ui/badge'\nimport { cn } from '@/lib/utils'\n\nexport default function App() {\n  const [messages, setMessages] = useState([])\n  const [input, setInput] = useState('')\n  const bottomRef = useRef(null)\n\n  useEffect(() => {\n    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })\n  }, [messages])\n\n  const send = () => {\n    if (!input.trim()) return\n    setMessages(m => [...m, { role: 'user', content: input }])\n    setInput('')\n  }\n\n  return (\n    <div className=\"min-h-screen flex\">\n\n      {/* Session list sidebar */}\n      <aside className=\"w-64 border-r flex flex-col shrink-0\">\n        <div className=\"px-4 py-3 border-b\">\n          <Button className=\"w-full\" variant=\"outline\" size=\"sm\">New conversation</Button>\n        </div>\n        <ScrollArea className=\"flex-1\">\n          <div className=\"flex flex-col gap-1 p-2\">\n            {/* Session items */}\n          </div>\n        </ScrollArea>\n      </aside>\n\n      {/* Conversation area */}\n      <div className=\"flex-1 flex flex-col\">\n\n        {/* Thread header */}\n        <header className=\"border-b px-6 py-3 flex items-center gap-3 shrink-0\">\n          <Avatar className=\"h-7 w-7\"><AvatarFallback>A</AvatarFallback></Avatar>\n          <span className=\"font-medium text-sm\"><!-- Conversation title or participant name --></span>\n        </header>\n\n        {/* Message list */}\n        <ScrollArea className=\"flex-1 px-6 py-4\">\n          <div className=\"flex flex-col gap-4 max-w-2xl mx-auto\">\n            {messages.map((m, i) => (\n              <div key={i} className={cn('flex gap-3', m.role === 'user' && 'flex-row-reverse')}>\n                <Avatar className=\"h-7 w-7 shrink-0\">\n                  <AvatarFallback>{m.role === 'user' ? 'U' : 'A'}</AvatarFallback>\n                </Avatar>\n                <div className={cn(\n                  'rounded-lg px-4 py-2.5 text-sm max-w-prose',\n                  m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'\n                )}>\n                  {m.content}\n                </div>\n              </div>\n            ))}\n            <div ref={bottomRef} />\n          </div>\n        </ScrollArea>\n\n        {/* Composer */}\n        <div className=\"border-t px-6 py-4 shrink-0\">\n          <div className=\"max-w-2xl mx-auto flex gap-3 items-end\">\n            <Textarea\n              value={input}\n              onChange={e => setInput(e.target.value)}\n              onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}\n              placeholder=\"Type a message...\"\n              rows={2}\n              className=\"resize-none flex-1\"\n            />\n            <Button onClick={send} className=\"shrink-0\">Send</Button>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  )\n}",
+    "zones": {
+      "session-list": {
+        "role": "Multi-conversation navigation \u2014 optional for single-conversation apps",
+        "components": {
+          "new-button": "Button (outline, full-width) for starting a new conversation",
+          "session-items": "div or button per session with title, timestamp snippet, and optional unread Badge",
+          "scroll": "ScrollArea wrapping the session list",
+          "search": "Input above the list for filtering sessions by title"
+        },
+        "taiso_alternative": "taiso-chat service component (from @/components/taiso/taiso-chat) \u2014 use when the chat needs to connect to the Taiso LLM API with built-in session management, streaming, and choice selectors",
+        "typical_content": [
+          "New conversation Button",
+          "Session list items with title and relative timestamp",
+          "Active session highlighted with bg-accent"
+        ],
+        "do_not_place": [
+          "Message content",
+          "Composer"
+        ]
+      },
+      "message-list": {
+        "role": "The conversation thread",
+        "components": {
+          "scroll": "ScrollArea with flex-1 \u2014 auto-scrolls to bottom on new message via useRef + scrollIntoView",
+          "message-bubble": "div with cn() toggling bg-primary text-primary-foreground (user) vs bg-muted (assistant/other)",
+          "avatar": "Avatar + AvatarFallback per message sender",
+          "timestamp": "span with text-xs text-muted-foreground",
+          "loading": "Spinner or animated Skeleton for streaming/pending assistant response"
+        },
+        "typical_content": [
+          "User messages right-aligned with bg-primary",
+          "Assistant/other messages left-aligned with bg-muted",
+          "Avatar + sender name per message",
+          "Relative timestamps"
+        ],
+        "do_not_place": [
+          "Composer controls",
+          "Navigation"
+        ]
+      },
+      "composer": {
+        "role": "Message input and send control",
+        "components": {
+          "input": "Textarea (resize-none) with Enter-to-send (Shift+Enter for newline)",
+          "send-button": "Button (default) \u2014 disabled when input is empty",
+          "attachments": "Button (ghost, icon-only) for file attachment if needed"
+        },
+        "typical_content": [
+          "Textarea with 2\u20133 rows, grows with content",
+          "Send Button",
+          "Enter sends, Shift+Enter inserts newline"
+        ],
+        "do_not_place": [
+          "Message display",
+          "Session controls"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "The message list must auto-scroll to the bottom when a new message is added \u2014 use useRef + scrollIntoView",
+      "Enter key in Textarea must send the message; Shift+Enter must insert a newline",
+      "The Send Button must be disabled when the input is empty or whitespace-only",
+      "User messages must be visually distinct from assistant/other messages \u2014 use bg-primary vs bg-muted",
+      "Constrain the message list and composer to max-w-2xl mx-auto to maintain readable line lengths",
+      "Pre-populate the thread with 3\u20135 realistic sample messages so the layout is immediately visible"
+    ],
+    "agent_instructions": "Infer the conversation type from the app description (AI assistant, support chat, team messaging). Pre-populate messages with 4\u20136 realistic sample exchanges. Implement send functionality: user messages append immediately, and for AI chat apps add a simulated assistant response with a short setTimeout. Wire Enter-to-send. If the app is AI-focused, note in a comment that the send handler can be wired to the Taiso LLM API or the taiso-chat service component. If multi-session is relevant, populate the session list with 3\u20134 realistic session titles."
+  },
+  {
+    "id": "settings",
+    "version": "1.0",
+    "display_name": "Settings / profile",
+    "layout_description": "A two-column settings page with a section navigation list on the left and a form-heavy detail pane on the right. The left column lists all settings categories (Account, Security, Notifications, Billing, etc.) as clickable items. Selecting a category scrolls or routes to that section's form in the right pane. Each section contains a heading, a brief description, and a group of labelled form fields. A save action is available per section or as a sticky footer bar. On mobile, the section list collapses to a Select or Sheet-based navigation.",
+    "html_structure": "import { useState } from 'react'\nimport { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Button } from '@/components/ui/button'\nimport { Switch } from '@/components/ui/switch'\nimport { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '@/components/ui/select'\nimport { Separator } from '@/components/ui/separator'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Badge } from '@/components/ui/badge'\nimport { cn } from '@/lib/utils'\nimport { toast } from 'sonner'\n\nconst SECTIONS = [\n  { id: 'account', label: 'Account' },\n  { id: 'security', label: 'Security' },\n  { id: 'notifications', label: 'Notifications' },\n]\n\nexport default function App() {\n  const [active, setActive] = useState('account')\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n      <header className=\"border-b px-6 py-3\">\n        <span className=\"font-bold font-heading\">Settings</span>\n      </header>\n      <div className=\"flex flex-1 max-w-5xl mx-auto w-full px-6 py-8 gap-10\">\n\n        {/* Section nav */}\n        <aside className=\"w-48 shrink-0\">\n          <nav className=\"flex flex-col gap-1\">\n            {SECTIONS.map(s => (\n              <button\n                key={s.id}\n                onClick={() => setActive(s.id)}\n                className={cn(\n                  'text-sm px-3 py-2 rounded-md text-left transition-colors',\n                  active === s.id ? 'bg-accent font-medium' : 'text-muted-foreground hover:bg-accent/50'\n                )}\n              >\n                {s.label}\n              </button>\n            ))}\n          </nav>\n        </aside>\n\n        {/* Form pane */}\n        <main className=\"flex-1 flex flex-col gap-6\">\n          {active === 'account' && (\n            <Card>\n              <CardHeader>\n                <CardTitle>Account</CardTitle>\n                <CardDescription>Update your account information.</CardDescription>\n              </CardHeader>\n              <CardContent className=\"flex flex-col gap-4\">\n                {/* Fields */}\n                <div className=\"flex flex-col gap-1.5\">\n                  <Label htmlFor=\"name\">Display name</Label>\n                  <Input id=\"name\" placeholder=\"Your name\" />\n                </div>\n                <div className=\"flex justify-end\">\n                  <Button onClick={() => toast.success('Saved')}>Save changes</Button>\n                </div>\n              </CardContent>\n            </Card>\n          )}\n        </main>\n\n      </div>\n    </div>\n  )\n}",
+    "zones": {
+      "section-nav": {
+        "role": "Navigate between settings categories",
+        "components": {
+          "nav-items": "button elements with cn() toggling bg-accent (active) vs text-muted-foreground hover:bg-accent/50",
+          "mobile-fallback": "Select + SelectTrigger + SelectContent + SelectItem \u2014 use below md breakpoint"
+        },
+        "typical_content": [
+          "Account / Profile",
+          "Security / Password",
+          "Notifications",
+          "Billing / Plan",
+          "Integrations",
+          "Advanced / Danger zone"
+        ],
+        "do_not_place": [
+          "Form fields",
+          "Section content"
+        ]
+      },
+      "form-groups": {
+        "role": "The settings form for the active section",
+        "components": {
+          "section-card": "Card + CardHeader (CardTitle + CardDescription) + CardContent",
+          "text-field": "Label + Input in a flex flex-col gap-1.5 wrapper",
+          "toggle-field": "Label + Switch in a flex items-center justify-between row",
+          "select-field": "Label + Select + SelectTrigger + SelectContent + SelectItem",
+          "danger-section": "Card with border-destructive for irreversible actions (delete account, etc.)",
+          "avatar-upload": "Avatar + AvatarFallback with a Button (outline) for changing profile picture"
+        },
+        "typical_content": [
+          "Account: display name, email, avatar",
+          "Security: current password, new password, 2FA Switch",
+          "Notifications: per-event Switch toggles",
+          "Billing: current plan Badge, upgrade Button"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "Unrelated sections \u2014 render one section's Card(s) at a time"
+        ]
+      },
+      "save-bar": {
+        "role": "Persist changes for the current section",
+        "components": {
+          "save": "Button (default) \u2014 'Save changes', calls toast.success() on click",
+          "cancel": "Button (outline or ghost) \u2014 'Cancel', resets form state"
+        },
+        "typical_content": [
+          "Save changes Button right-aligned inside CardContent",
+          "Cancel Button left of Save for destructive-risk sections"
+        ],
+        "do_not_place": [
+          "Section navigation",
+          "Unrelated actions"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Render only the active section's Card(s) in the form pane \u2014 do not render all sections simultaneously",
+      "Every form field must have a Label with a matching htmlFor / id pair",
+      "Save must call toast.success() \u2014 never navigate away or reload",
+      "Dangerous / irreversible actions (delete account, revoke access) must be in a separate Card with border-destructive and a confirmation AlertDialog",
+      "Section nav items must have clear active state using bg-accent",
+      "Do not use Form + FormField (react-hook-form) unless the description specifically requires field validation \u2014 Label + Input is sufficient for most settings forms"
+    ],
+    "agent_instructions": "Infer 3\u20135 relevant settings sections from the app description. For each section, generate appropriate Label + Input / Switch / Select fields. Implement active section state and render only the active section's content. Add toast.success() on each Save button. If the app has user accounts, include an Account section with name, email, and avatar. If the app has notifications, implement a Notifications section with Switch toggles per notification type. Add a Danger Zone card in the last section with a delete/reset action behind an AlertDialog confirmation."
+  },
+  {
+    "id": "auth",
+    "version": "1.0",
+    "display_name": "Auth screens",
+    "layout_description": "A minimal, centered card on a full-viewport background, containing an authentication form. The background uses the app's primary or muted background color. The card holds the app logo or name, the form fields, and a primary submit action. Secondary actions (sign up / log in toggle, forgot password link) appear below the submit button. Social auth buttons (Sign in with Google, etc.) appear above or below the form with a visual separator. Multiple screen variants share the same centered-card layout: Login, Sign Up, Forgot Password, and Email Verification.",
+    "html_structure": "import { useState } from 'react'\nimport { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Button } from '@/components/ui/button'\nimport { Separator } from '@/components/ui/separator'\nimport { toast } from 'sonner'\n\nexport default function App() {\n  const [screen, setScreen] = useState('login')\n  const [email, setEmail] = useState('')\n  const [password, setPassword] = useState('')\n\n  return (\n    <div className=\"min-h-screen flex items-center justify-center p-6 bg-muted/40\">\n      <Card className=\"w-full max-w-sm\">\n        <CardHeader className=\"text-center\">\n          <CardTitle className=\"text-2xl font-bold font-heading\">\n            {screen === 'login' ? 'Sign in' : screen === 'signup' ? 'Create account' : 'Reset password'}\n          </CardTitle>\n          <CardDescription>\n            {screen === 'login' ? 'Enter your credentials to continue' : screen === 'signup' ? 'Fill in your details to get started' : \"We'll send you a reset link\"}\n          </CardDescription>\n        </CardHeader>\n\n        <CardContent className=\"flex flex-col gap-4\">\n          {/* Social auth */}\n          <Button variant=\"outline\" className=\"w-full\">Continue with Google</Button>\n          <div className=\"flex items-center gap-3\">\n            <Separator className=\"flex-1\" />\n            <span className=\"text-xs text-muted-foreground\">or</span>\n            <Separator className=\"flex-1\" />\n          </div>\n\n          {/* Form fields */}\n          {screen === 'signup' && (\n            <div className=\"flex flex-col gap-1.5\">\n              <Label htmlFor=\"name\">Full name</Label>\n              <Input id=\"name\" placeholder=\"Your name\" />\n            </div>\n          )}\n          <div className=\"flex flex-col gap-1.5\">\n            <Label htmlFor=\"email\">Email</Label>\n            <Input id=\"email\" type=\"email\" value={email} onChange={e => setEmail(e.target.value)} placeholder=\"you@example.com\" />\n          </div>\n          {screen !== 'forgot' && (\n            <div className=\"flex flex-col gap-1.5\">\n              <div className=\"flex items-center justify-between\">\n                <Label htmlFor=\"password\">Password</Label>\n                {screen === 'login' && (\n                  <button onClick={() => setScreen('forgot')} className=\"text-xs text-muted-foreground hover:underline\">Forgot password?</button>\n                )}\n              </div>\n              <Input id=\"password\" type=\"password\" value={password} onChange={e => setPassword(e.target.value)} />\n            </div>\n          )}\n\n          <Button className=\"w-full\" onClick={() => toast.success('Success!')}>\n            {screen === 'login' ? 'Sign in' : screen === 'signup' ? 'Create account' : 'Send reset link'}\n          </Button>\n        </CardContent>\n\n        <CardFooter className=\"justify-center\">\n          <p className=\"text-sm text-muted-foreground\">\n            {screen === 'login' ? \"Don't have an account? \" : 'Already have an account? '}\n            <button onClick={() => setScreen(screen === 'login' ? 'signup' : 'login')} className=\"underline text-foreground\">\n              {screen === 'login' ? 'Sign up' : 'Sign in'}\n            </button>\n          </p>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}",
+    "zones": {
+      "logo": {
+        "role": "App identity at the top of the auth card",
+        "components": {
+          "wordmark": "CardTitle with text-2xl font-bold font-heading",
+          "descriptor": "CardDescription with a short screen-specific message"
+        },
+        "typical_content": [
+          "App name as CardTitle",
+          "Short action prompt as CardDescription: 'Sign in to continue', 'Create your account'"
+        ],
+        "do_not_place": [
+          "Form fields",
+          "Navigation"
+        ]
+      },
+      "form-card": {
+        "role": "The auth form itself",
+        "components": {
+          "social-auth": "Button (outline, full-width) for OAuth providers, above a Separator with 'or' label",
+          "fields": "Label + Input (email type for email, password type for password) in flex flex-col gap-1.5 wrappers",
+          "submit": "Button (default, full-width)",
+          "forgot-link": "button element with text-xs text-muted-foreground hover:underline \u2014 right-aligned next to the Password Label",
+          "wrapper": "Card + CardHeader + CardContent + CardFooter"
+        },
+        "block_alternative": "login-form block (from @/components/blocks/login-form) \u2014 use this when a fully pre-built, styled login form is sufficient without customisation",
+        "typical_content": [
+          "Social auth Button + Separator",
+          "Email Input",
+          "Password Input with Forgot password link",
+          "Submit Button full-width",
+          "Toggle link to sign up / sign in in CardFooter"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "App content"
+        ]
+      },
+      "footer-links": {
+        "role": "Secondary navigation between auth screens",
+        "components": {
+          "toggle": "Plain button element with underline + text-foreground \u2014 'Sign up' / 'Sign in' toggle",
+          "terms": "text-xs text-muted-foreground with inline links for Terms and Privacy if required"
+        }
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Always use bg-muted/40 on the outer wrapper so the card has visible lift from the background",
+      "Input type must be correct: type='email' for email, type='password' for password",
+      "The submit Button must be full-width (w-full)",
+      "Never navigate on submit in the prototype \u2014 use toast.success() as a stand-in",
+      "Implement screen switching (login / signup / forgot) as local state so all variants are demoable",
+      "The login-form block is a fast alternative \u2014 reference it if the app description doesn't require customisation"
+    ],
+    "agent_instructions": "Implement all three auth screen variants (login, signup, forgot password) as conditional renders controlled by a screen state variable. Wire the toggle links and forgot-password link to switch between screens. Add a social auth Button with an outline variant above the form separator. Call toast.success() on form submit. If the app description suggests a specific brand, update the CardTitle. Reference the login-form block as an alternative if minimal customisation is needed."
+  },
+  {
+    "id": "inbox",
+    "version": "1.0",
+    "display_name": "Inbox / notification center",
+    "layout_description": "A three-column layout \u2014 section navigation on the far left, an item list in the centre, and an action panel on the right \u2014 designed for managing a set of actionable items. Unlike a pure feed, inbox items carry read/unread state, triage actions (resolve, assign, archive, snooze), and often belong to categories (Todo, In Progress, Done). The centre column is the primary focus: items are sorted by recency or priority, with visual weight on unread items. The right panel shows the selected item's detail and available actions. Used for notification centres, support queues, task inboxes, and review queues.",
+    "html_structure": "import { useState } from 'react'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Badge } from '@/components/ui/badge'\nimport { Button } from '@/components/ui/button'\nimport { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'\nimport { Separator } from '@/components/ui/separator'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\nimport { Card, CardContent } from '@/components/ui/card'\nimport { cn } from '@/lib/utils'\n\nexport default function App() {\n  const [filter, setFilter] = useState('inbox')\n  const [selected, setSelected] = useState(null)\n\n  return (\n    <div className=\"min-h-screen flex\">\n\n      {/* Section nav */}\n      <aside className=\"w-44 border-r flex flex-col shrink-0\">\n        <div className=\"px-4 py-3 border-b\">\n          <span className=\"font-bold font-heading text-sm\">Inbox</span>\n        </div>\n        <nav className=\"flex flex-col gap-1 p-2\">\n          {[['inbox','Inbox',4],['done','Done',0],['snoozed','Snoozed',1]].map(([id, label, count]) => (\n            <button\n              key={id}\n              onClick={() => setFilter(id)}\n              className={cn('flex items-center justify-between text-sm px-3 py-2 rounded-md', filter === id ? 'bg-accent font-medium' : 'text-muted-foreground hover:bg-accent/50')}\n            >\n              <span>{label}</span>\n              {count > 0 && <Badge variant=\"secondary\" className=\"h-5 px-1.5 text-xs\">{count}</Badge>}\n            </button>\n          ))}\n        </nav>\n      </aside>\n\n      {/* Item list */}\n      <div className=\"w-80 border-r flex flex-col shrink-0\">\n        <div className=\"px-4 py-3 border-b flex items-center justify-between\">\n          <span className=\"text-sm font-medium\">{filter.charAt(0).toUpperCase() + filter.slice(1)}</span>\n          <Button variant=\"ghost\" size=\"sm\">Mark all read</Button>\n        </div>\n        <ScrollArea className=\"flex-1\">\n          <div className=\"flex flex-col\">\n            {/* Item rows */}\n          </div>\n        </ScrollArea>\n      </div>\n\n      {/* Action panel */}\n      <main className=\"flex-1 flex flex-col\">\n        {selected ? (\n          <ScrollArea className=\"flex-1\">\n            <div className=\"p-6 flex flex-col gap-4\">\n              {/* Item detail and triage actions */}\n            </div>\n          </ScrollArea>\n        ) : (\n          <div className=\"flex-1 flex items-center justify-center\">\n            <p className=\"text-sm text-muted-foreground\">Select an item</p>\n          </div>\n        )}\n      </main>\n\n    </div>\n  )\n}",
+    "zones": {
+      "filter-tabs": {
+        "role": "Section navigation: category or triage-state filters",
+        "components": {
+          "nav-items": "button elements with cn() for active state, each showing label + unread count Badge",
+          "count-badge": "Badge (secondary, small) showing unread count per section"
+        },
+        "typical_content": [
+          "Inbox (with unread count)",
+          "Done / Resolved",
+          "Snoozed",
+          "Assigned to me"
+        ],
+        "do_not_place": [
+          "Item content",
+          "Triage actions"
+        ]
+      },
+      "item-list": {
+        "role": "Scrollable list of inbox items for the active section",
+        "components": {
+          "scroll": "ScrollArea",
+          "item-row": "div/button with border-b, selected state (bg-accent), unread state (font-medium), Avatar + title + preview + timestamp",
+          "unread-dot": "div with w-2 h-2 rounded-full bg-primary for unread indicator",
+          "empty": "Empty component when section has no items"
+        },
+        "typical_content": [
+          "Avatar + sender/source name",
+          "Item title (font-medium when unread)",
+          "1-line content preview (text-xs text-muted-foreground, truncated)",
+          "Relative timestamp right-aligned",
+          "Unread dot indicator"
+        ],
+        "do_not_place": [
+          "Triage action buttons \u2014 those go in the action panel"
+        ]
+      },
+      "action-panel": {
+        "role": "Full item view with triage actions",
+        "components": {
+          "header": "Item title as heading + sender Avatar + timestamp",
+          "body": "ScrollArea wrapping the item's full content",
+          "triage-actions": "ButtonGroup or flex row of Button (outline/ghost) \u2014 Resolve, Archive, Snooze, Assign",
+          "reply": "Textarea + Button for reply/response if applicable",
+          "empty": "Centred text-sm text-muted-foreground when nothing is selected"
+        },
+        "typical_content": [
+          "Item header: sender, subject, timestamp",
+          "Full item content body",
+          "Triage action buttons: Resolve, Snooze, Archive",
+          "Reply composer if the inbox type supports replies"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "Item list"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Unread items must be visually heavier than read items \u2014 use font-medium and an unread dot",
+      "The action panel must show an empty state when nothing is selected",
+      "Section nav must show unread counts as Badge next to each label",
+      "Triage actions must update item state immediately (optimistic UI) \u2014 mark as read, move to Done, etc.",
+      "Item list and action panel scroll independently via their own ScrollArea instances"
+    ],
+    "agent_instructions": "Infer the inbox type from the app description (notifications, support tickets, task queue, review queue, etc.). Generate 6\u201310 sample items with realistic titles, senders, previews, and timestamps \u2014 mix read and unread states. Implement section filtering (Inbox / Done / Snoozed) as client-side state. Wire item selection to show detail in the action panel. Implement at least Resolve and Archive triage actions that move items between sections. Add a reply composer in the action panel if the inbox type supports responses."
+  },
+  {
+    "id": "modal-overlay",
+    "version": "1.0",
+    "display_name": "Modal / overlay",
+    "layout_description": "A modal or overlay layer that sits above the app shell. This template is not a standalone page layout \u2014 it is a component pattern used within any other template. It covers three distinct variants: a Dialog for confirmation and data-entry modals, a Sheet for side panels and detail drawers, and a Command palette (\u2318K) for keyboard-driven navigation and action search. Each variant has distinct sizing and interaction models but shares the same underlying scrim-and-panel structure.",
+    "html_structure": "import { useState } from 'react'\nimport { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose } from '@/components/ui/dialog'\nimport { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from '@/components/ui/alert-dialog'\nimport { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetFooter, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet'\nimport { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandSeparator, CommandShortcut } from '@/components/ui/command'\nimport { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover'\nimport { Button } from '@/components/ui/button'\nimport { Input } from '@/components/ui/input'\nimport { Label } from '@/components/ui/label'\nimport { Kbd } from '@/components/ui/kbd'\nimport { toast } from 'sonner'\n\n// Variant 1: Confirmation dialog\n<AlertDialog>\n  <AlertDialogTrigger asChild><Button variant=\"destructive\">Delete</Button></AlertDialogTrigger>\n  <AlertDialogContent>\n    <AlertDialogHeader>\n      <AlertDialogTitle>Are you sure?</AlertDialogTitle>\n      <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>\n    </AlertDialogHeader>\n    <AlertDialogFooter>\n      <AlertDialogCancel>Cancel</AlertDialogCancel>\n      <AlertDialogAction onClick={() => toast.success('Deleted')}>Delete</AlertDialogAction>\n    </AlertDialogFooter>\n  </AlertDialogContent>\n</AlertDialog>\n\n// Variant 2: Data-entry dialog\n<Dialog>\n  <DialogTrigger asChild><Button>New item</Button></DialogTrigger>\n  <DialogContent>\n    <DialogHeader>\n      <DialogTitle>Create item</DialogTitle>\n      <DialogDescription>Fill in the details below.</DialogDescription>\n    </DialogHeader>\n    <div className=\"flex flex-col gap-4 py-4\">\n      <div className=\"flex flex-col gap-1.5\">\n        <Label htmlFor=\"item-name\">Name</Label>\n        <Input id=\"item-name\" placeholder=\"Item name\" />\n      </div>\n    </div>\n    <DialogFooter>\n      <DialogClose asChild><Button variant=\"outline\">Cancel</Button></DialogClose>\n      <Button onClick={() => toast.success('Created')}>Create</Button>\n    </DialogFooter>\n  </DialogContent>\n</Dialog>\n\n// Variant 3: Command palette (\u2318K)\n// Wrap in Popover or Dialog open state triggered by Cmd+K listener\n<Command className=\"rounded-lg border shadow-md\">\n  <CommandInput placeholder=\"Type a command or search...\" />\n  <CommandList>\n    <CommandEmpty>No results found.</CommandEmpty>\n    <CommandGroup heading=\"Actions\">\n      <CommandItem>New project<CommandShortcut>\u2318N</CommandShortcut></CommandItem>\n      <CommandItem>Open settings<CommandShortcut>\u2318,</CommandShortcut></CommandItem>\n    </CommandGroup>\n    <CommandSeparator />\n    <CommandGroup heading=\"Navigation\">\n      <CommandItem>Go to dashboard</CommandItem>\n    </CommandGroup>\n  </CommandList>\n</Command>",
+    "zones": {
+      "scrim": {
+        "role": "Background overlay that dims the app shell",
+        "components": {
+          "dialog": "DialogContent handles the scrim automatically",
+          "sheet": "SheetContent handles the scrim automatically",
+          "command-wrapper": "Dialog with full-screen content area for command palette \u2014 or Popover for inline"
+        },
+        "typical_content": [
+          "Handled automatically by Dialog, AlertDialog, and Sheet components"
+        ],
+        "do_not_place": [
+          "App content \u2014 scrim is managed by the component, not authored manually"
+        ]
+      },
+      "modal-card": {
+        "role": "The floating panel \u2014 type determines size and position",
+        "components": {
+          "confirmation": "AlertDialog + AlertDialogContent + AlertDialogHeader + AlertDialogFooter \u2014 use for irreversible actions only",
+          "data-entry": "Dialog + DialogContent + DialogHeader + DialogFooter \u2014 use for forms and create/edit flows",
+          "side-panel": "Sheet + SheetContent (side='right') + SheetHeader + SheetFooter \u2014 use for detail views and extended forms",
+          "command-palette": "Command + CommandInput + CommandList + CommandGroup + CommandItem + CommandShortcut \u2014 use for keyboard-driven search and navigation (requires cmdk dependency)"
+        }
+      },
+      "header": {
+        "role": "Modal title and description",
+        "components": {
+          "dialog": "DialogHeader + DialogTitle + DialogDescription",
+          "alert": "AlertDialogHeader + AlertDialogTitle + AlertDialogDescription",
+          "sheet": "SheetHeader + SheetTitle + SheetDescription"
+        }
+      },
+      "body": {
+        "role": "Form fields or content inside the modal",
+        "components": {
+          "fields": "Label + Input / Textarea / Select in flex flex-col gap-1.5 wrappers",
+          "form": "Form + FormField + FormControl + FormMessage when validation is needed"
+        }
+      },
+      "action-bar": {
+        "role": "Modal action buttons",
+        "components": {
+          "dialog-footer": "DialogFooter with Cancel (outline via DialogClose) + primary action Button",
+          "alert-footer": "AlertDialogFooter with AlertDialogCancel + AlertDialogAction",
+          "sheet-footer": "SheetFooter with SheetClose + primary action Button"
+        },
+        "typical_content": [
+          "Cancel / Close (secondary, left)",
+          "Confirm / Save / Create (default primary, right)"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "Unrelated secondary actions"
+        ]
+      },
+      "command-input": {
+        "role": "Search input for command palette",
+        "components": {
+          "input": "CommandInput \u2014 built into Command, handles filtering automatically"
+        }
+      },
+      "result-list": {
+        "role": "Filtered command and navigation results",
+        "components": {
+          "list": "CommandList + CommandEmpty + CommandGroup + CommandItem",
+          "separator": "CommandSeparator between groups",
+          "shortcut": "CommandShortcut for keyboard shortcut hints"
+        }
+      }
+    },
+    "extra_dependencies": [],
+    "optional_dependencies": {
+      "cmdk": "Required for Command palette functionality"
+    },
+    "constraints": [
+      "Use AlertDialog for irreversible/destructive confirmations \u2014 never use Dialog for these",
+      "Use Dialog for data-entry and create/edit flows",
+      "Use Sheet for detail side-panels that need more space than a Dialog",
+      "DialogFooter Cancel must use DialogClose asChild to close the dialog on click",
+      "Command palette must respond to Cmd+K \u2014 wire a useEffect keyboard listener",
+      "Never put a Delete action directly in a Dialog's primary Button \u2014 always use AlertDialog for destructive actions"
+    ],
+    "agent_instructions": "Identify which modal variant(s) the app needs from the description. For most apps, implement at minimum: a Dialog for the primary create/edit action, and an AlertDialog for any delete/destructive action. If the app benefits from keyboard navigation (developer tools, productivity apps), add a Command palette triggered by Cmd+K. Populate the Command palette with 6\u201310 relevant actions and navigation items grouped by category. Wire all modals to toast.success() on confirm. Add cmdk to dependencies only if the Command palette is implemented."
+  },
+  {
+    "id": "split-browser",
+    "version": "1.0",
+    "display_name": "Split browser / doc+result",
+    "layout_description": "A two-pane reading and writing layout. The left pane shows reference content \u2014 source documents, search results, context, or retrieved citations. The right pane shows generated or processed output \u2014 an answer, a draft, a filled template, or a transformed result. A divider between the panes is draggable. An optional citation rail on the far right links numbered references in the output back to their source passages. A top toolbar holds the query input or task description, and controls for refreshing or re-running the generation. Used for AI research tools, document processors, and reference-driven writing tools.",
+    "html_structure": "import { useState } from 'react'\nimport { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable'\nimport { ScrollArea } from '@/components/ui/scroll-area'\nimport { Input } from '@/components/ui/input'\nimport { Button } from '@/components/ui/button'\nimport { Badge } from '@/components/ui/badge'\nimport { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'\nimport { Separator } from '@/components/ui/separator'\nimport { Spinner } from '@/components/ui/spinner'\nimport { cn } from '@/lib/utils'\n\nexport default function App() {\n  const [query, setQuery] = useState('')\n  const [loading, setLoading] = useState(false)\n\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Toolbar: query input */}\n      <header className=\"border-b px-4 py-3 flex items-center gap-3 shrink-0\">\n        <span className=\"font-bold font-heading text-sm shrink-0\"><!-- App name --></span>\n        <Input\n          value={query}\n          onChange={e => setQuery(e.target.value)}\n          placeholder=\"Ask a question or describe your task...\"\n          className=\"flex-1\"\n          onKeyDown={e => { if (e.key === 'Enter') { /* trigger run */ } }}\n        />\n        <Button onClick={() => { /* trigger run */ }} disabled={!query.trim() || loading}>\n          {loading ? <Spinner className=\"h-4 w-4\" /> : 'Run'}\n        </Button>\n      </header>\n\n      <ResizablePanelGroup direction=\"horizontal\" className=\"flex-1\">\n\n        {/* Source pane */}\n        <ResizablePanel defaultSize={40} minSize={25}>\n          <div className=\"h-full flex flex-col\">\n            <div className=\"border-b px-4 py-2\">\n              <span className=\"text-xs font-medium text-muted-foreground uppercase tracking-wide\">Sources</span>\n            </div>\n            <ScrollArea className=\"flex-1\">\n              <div className=\"flex flex-col gap-3 p-4\">\n                {/* Source cards */}\n                <Card>\n                  <CardHeader className=\"pb-2\">\n                    <CardTitle className=\"text-sm\"><!-- Source title --></CardTitle>\n                  </CardHeader>\n                  <CardContent>\n                    <p className=\"text-sm text-muted-foreground\"><!-- Source excerpt --></p>\n                  </CardContent>\n                </Card>\n              </div>\n            </ScrollArea>\n          </div>\n        </ResizablePanel>\n\n        <ResizableHandle />\n\n        {/* Result pane */}\n        <ResizablePanel defaultSize={60} minSize={35}>\n          <div className=\"h-full flex flex-col\">\n            <div className=\"border-b px-4 py-2 flex items-center justify-between\">\n              <span className=\"text-xs font-medium text-muted-foreground uppercase tracking-wide\">Result</span>\n              <Button variant=\"ghost\" size=\"sm\">Copy</Button>\n            </div>\n            <ScrollArea className=\"flex-1\">\n              <div className=\"p-6\">\n                {/* Generated result */}\n              </div>\n            </ScrollArea>\n          </div>\n        </ResizablePanel>\n\n      </ResizablePanelGroup>\n    </div>\n  )\n}",
+    "zones": {
+      "toolbar": {
+        "role": "Query input and run controls",
+        "components": {
+          "query-input": "Input (full-width, flex-1) with Enter-to-run",
+          "run-button": "Button \u2014 shows Spinner when loading, disabled when empty",
+          "status": "Badge (secondary) for result status or source count"
+        },
+        "typical_content": [
+          "Query or task description Input",
+          "Run / Search / Generate Button",
+          "Optional source count Badge"
+        ],
+        "do_not_place": [
+          "Source content",
+          "Result content"
+        ]
+      },
+      "source-pane": {
+        "role": "Reference content that informs the result",
+        "components": {
+          "scroll": "ScrollArea",
+          "source-card": "Card + CardHeader (CardTitle for source title) + CardContent (excerpt text)",
+          "citation-number": "Badge (outline, small) as superscript reference number",
+          "empty": "Empty component or text-sm text-muted-foreground when no sources loaded"
+        },
+        "taiso_alternative": "search-bar service component (from @/components/taiso/search-bar) \u2014 use when the source pane needs hybrid vector+text search against a Taiso knowledge base",
+        "typical_content": [
+          "Source cards with title, URL/reference, and excerpt",
+          "Citation number Badge on each source",
+          "Relevance or page number metadata"
+        ],
+        "do_not_place": [
+          "Result content",
+          "Query controls"
+        ]
+      },
+      "result-pane": {
+        "role": "Generated or processed output",
+        "components": {
+          "scroll": "ScrollArea",
+          "content": "div with prose-appropriate text styling for rendered output",
+          "copy-button": "Button (ghost, sm) in the pane header for copying result to clipboard",
+          "loading": "Spinner centred in the pane while generation is in progress",
+          "empty": "Text-sm text-muted-foreground prompt to run a query"
+        },
+        "typical_content": [
+          "Generated answer or summary",
+          "Numbered inline citations linking to source cards",
+          "Copy to clipboard Button"
+        ],
+        "do_not_place": [
+          "Source documents",
+          "Query input"
+        ]
+      },
+      "citation-rail": {
+        "role": "Numbered reference index linking result citations to sources \u2014 optional",
+        "components": {
+          "rail": "Narrow aside (w-12) with border-l",
+          "citation-links": "Button (ghost, size='sm') per citation number that scrolls the source pane to that source"
+        },
+        "typical_content": [
+          "Numbered citation Buttons [1] [2] [3]",
+          "Clicking scrolls source pane to the matching card"
+        ],
+        "do_not_place": [
+          "Content",
+          "Navigation"
+        ]
+      }
+    },
+    "extra_dependencies": [
+      "react-resizable-panels"
+    ],
+    "constraints": [
+      "The Run Button must be disabled when the query Input is empty",
+      "Show Spinner in the Run Button while loading \u2014 never disable the UI entirely",
+      "Source and result panes scroll independently via separate ScrollArea instances",
+      "Pre-populate the source pane with 3\u20134 realistic sample source cards so the layout is immediately visible",
+      "The result pane must show a helpful empty state prompt when no query has been run yet"
+    ],
+    "agent_instructions": "Identify the app's domain (research assistant, document analyser, code explainer, etc.). Pre-populate 3\u20134 realistic source cards in the source pane. Pre-populate the result pane with a sample answer that references the sources. Implement the Run Button with a simulated loading state (useState + setTimeout). Wire Enter-to-run on the query Input. Add a Copy button that writes the result text to the clipboard via navigator.clipboard. If the app description implies connecting to the Taiso search API, add a comment indicating the search-bar service component can be used for the source pane. Add react-resizable-panels to dependencies."
+  },
+  {
+    "id": "landing",
+    "version": "1.0",
+    "display_name": "Landing / marketing",
+    "layout_description": "A vertically scrolling public marketing page with a sticky top navigation bar, a hero section, one or more feature or benefit sections, social proof (testimonials or logos), a pricing or comparison section, and a footer. The page is primarily read-only \u2014 CTAs direct the user to sign up or start a trial. The layout is full-width with max-width constrained content columns. This template is used for SaaS product homepages, product launch pages, and campaign landing pages. It is the only template with no persistent app chrome \u2014 the nav bar is the only UI element present across all sections.",
+    "html_structure": "import { Button } from '@/components/ui/button'\nimport { Badge } from '@/components/ui/badge'\nimport { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'\nimport { Separator } from '@/components/ui/separator'\nimport { Avatar, AvatarFallback } from '@/components/ui/avatar'\n\nexport default function App() {\n  return (\n    <div className=\"min-h-screen flex flex-col\">\n\n      {/* Sticky nav */}\n      <header className=\"sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm px-6 py-3 flex items-center justify-between\">\n        <span className=\"font-bold font-heading\"><!-- Logo --></span>\n        <nav className=\"hidden md:flex items-center gap-6 text-sm text-muted-foreground\">\n          <a href=\"#features\" className=\"hover:text-foreground\">Features</a>\n          <a href=\"#pricing\" className=\"hover:text-foreground\">Pricing</a>\n        </nav>\n        <div className=\"flex items-center gap-3\">\n          <Button variant=\"ghost\" size=\"sm\">Sign in</Button>\n          <Button size=\"sm\">Get started</Button>\n        </div>\n      </header>\n\n      <main className=\"flex-1\">\n\n        {/* Hero */}\n        <section className=\"px-6 py-24 text-center max-w-3xl mx-auto flex flex-col items-center gap-6\">\n          <Badge variant=\"secondary\"><!-- Tagline badge --></Badge>\n          <h1 className=\"text-4xl font-bold font-heading tracking-tight\"><!-- Headline --></h1>\n          <p className=\"text-lg text-muted-foreground max-w-xl\"><!-- Sub-headline --></p>\n          <div className=\"flex gap-3\">\n            <Button size=\"lg\">Get started free</Button>\n            <Button size=\"lg\" variant=\"outline\">See demo</Button>\n          </div>\n        </section>\n\n        <Separator />\n\n        {/* Features */}\n        <section id=\"features\" className=\"px-6 py-20 max-w-5xl mx-auto\">\n          <h2 className=\"text-2xl font-bold font-heading text-center mb-12\"><!-- Features heading --></h2>\n          <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6\">\n            <Card>\n              <CardHeader>\n                <CardTitle><!-- Feature name --></CardTitle>\n                <CardDescription><!-- Feature description --></CardDescription>\n              </CardHeader>\n            </Card>\n          </div>\n        </section>\n\n        <Separator />\n\n        {/* Pricing */}\n        <section id=\"pricing\" className=\"px-6 py-20 max-w-5xl mx-auto\">\n          <h2 className=\"text-2xl font-bold font-heading text-center mb-12\">Pricing</h2>\n          <div className=\"grid grid-cols-1 md:grid-cols-3 gap-6\">\n            {/* Pricing cards */}\n          </div>\n        </section>\n\n      </main>\n\n      {/* Footer */}\n      <footer className=\"border-t px-6 py-8 text-sm text-muted-foreground flex items-center justify-between\">\n        <span><!-- \u00a9 Year App name --></span>\n        <div className=\"flex gap-4\">\n          <a href=\"#\" className=\"hover:text-foreground\">Privacy</a>\n          <a href=\"#\" className=\"hover:text-foreground\">Terms</a>\n        </div>\n      </footer>\n\n    </div>\n  )\n}",
+    "zones": {
+      "nav": {
+        "role": "Sticky top navigation \u2014 minimal, non-intrusive",
+        "components": {
+          "logo": "span with font-bold font-heading",
+          "links": "Plain anchor tags with text-sm text-muted-foreground hover:text-foreground",
+          "cta": "Button (ghost, sm) for Sign in + Button (sm) for primary CTA"
+        },
+        "typical_content": [
+          "Logo left",
+          "3\u20134 anchor links to page sections (Features, Pricing, About) \u2014 hidden on mobile",
+          "Sign in (ghost) + Get started (default) right"
+        ],
+        "do_not_place": [
+          "App navigation",
+          "Forms"
+        ]
+      },
+      "hero": {
+        "role": "Above-the-fold section \u2014 primary value proposition and CTAs",
+        "components": {
+          "eyebrow": "Badge (secondary) for a short tagline or launch announcement",
+          "headline": "h1 with text-4xl font-bold font-heading tracking-tight",
+          "sub-headline": "p with text-lg text-muted-foreground max-w-xl",
+          "ctas": "Two Buttons (size='lg'): default primary CTA + outline secondary CTA"
+        },
+        "typical_content": [
+          "Eyebrow Badge: 'Now in beta', 'Introducing X'",
+          "Headline: clear value proposition in 8 words or fewer",
+          "Sub-headline: 1\u20132 sentences expanding on the benefit",
+          "Primary CTA: 'Get started free', 'Start building'",
+          "Secondary CTA: 'See demo', 'Learn more'"
+        ],
+        "do_not_place": [
+          "Feature details",
+          "Pricing",
+          "Forms"
+        ]
+      },
+      "features": {
+        "role": "3\u20136 key product capabilities",
+        "components": {
+          "section-heading": "h2 with text-2xl font-bold font-heading text-center",
+          "feature-cards": "Card + CardHeader (CardTitle + CardDescription) in a 3-column grid"
+        },
+        "typical_content": [
+          "Section heading",
+          "3\u20136 feature Cards, each with a short title and 1\u20132 sentence description"
+        ],
+        "do_not_place": [
+          "Pricing",
+          "CTAs unrelated to the feature"
+        ]
+      },
+      "social-proof": {
+        "role": "Testimonials, customer logos, or usage stats \u2014 optional",
+        "components": {
+          "testimonials": "Card + CardContent with blockquote + Avatar + AvatarFallback + author name",
+          "stats": "Three-column flex row with large number + muted label"
+        },
+        "typical_content": [
+          "2\u20133 testimonial Cards in a row",
+          "Customer logo strip",
+          "Usage stats: '10,000+ users', '99.9% uptime'"
+        ]
+      },
+      "pricing": {
+        "role": "Plan comparison with CTAs",
+        "components": {
+          "plan-cards": "Card in a 3-column grid",
+          "featured-plan": "Card with border-2 border-primary and a Badge ('Most popular') in CardHeader",
+          "price": "Large text with font-bold + small text-muted-foreground for /month",
+          "features-list": "ul with li items, checkmark prefix using text-primary",
+          "cta": "Button in CardFooter \u2014 default for featured plan, outline for others"
+        },
+        "typical_content": [
+          "Free / Pro / Enterprise tiers",
+          "Feature checklist per plan",
+          "CTA Button per plan"
+        ]
+      },
+      "footer": {
+        "role": "Legal links and copyright",
+        "components": {
+          "copyright": "span with text-sm text-muted-foreground",
+          "links": "anchor tags for Privacy, Terms, Contact"
+        }
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "The nav must be sticky (sticky top-0 z-50) with bg-background/80 so it remains readable while scrolling",
+      "Constrain all section content to max-w-5xl mx-auto (or max-w-3xl for text-heavy hero/cta sections)",
+      "Use Separator between major sections rather than large padding alone",
+      "The featured pricing plan must use border-2 border-primary \u2014 not a different background color",
+      "Never use hardcoded colors \u2014 use text-muted-foreground, text-foreground, bg-background, etc.",
+      "Anchor links in the nav must use href='#section-id' matching the section's id attribute"
+    ],
+    "agent_instructions": "Infer the product's value proposition, target user, and 3\u20136 key features from the app description. Write a concise headline (\u22648 words), sub-headline (1\u20132 sentences), and 3 feature cards with realistic names and descriptions. Generate 3 pricing tiers appropriate to the product (Free/Pro/Enterprise or similar) with a feature checklist for each. Mark the middle tier as featured. Add 2 testimonials with realistic names and quotes. Use realistic stats in the social proof section. Ensure all section anchor links work."
+  },
+  {
+    "id": "empty-error",
+    "version": "1.0",
+    "display_name": "Empty / error state",
+    "layout_description": "A full-page or full-region state that appears when there is nothing to show or when something has gone wrong. The layout is a centred vertical stack: an illustration or icon at the top, a headline, a short explanatory message, and a single recovery action. This template covers four variants: Empty (a list or collection has no items yet), First-use (the user hasn't created anything yet \u2014 encourage them to start), Error (something went wrong \u2014 offer retry or support), and 404 (the page doesn't exist \u2014 offer navigation home). All variants share the same centred layout. This is used both as a full-page template and as an inline region inside another template.",
+    "html_structure": "import { Button } from '@/components/ui/button'\nimport { Empty } from '@/components/ui/empty'\n\n// Variant 1: Using the Empty component directly (preferred)\n<Empty\n  title=\"No items yet\"\n  description=\"Get started by creating your first item.\"\n  action={<Button>Create item</Button>}\n/>\n\n// Variant 2: Custom full-page layout\nimport { Button } from '@/components/ui/button'\nimport { Separator } from '@/components/ui/separator'\n\nexport default function App() {\n  return (\n    <div className=\"min-h-screen flex items-center justify-center p-6\">\n      <div className=\"flex flex-col items-center gap-4 text-center max-w-sm\">\n\n        {/* Illustration area: icon or SVG */}\n        <div className=\"w-16 h-16 rounded-2xl bg-muted flex items-center justify-center\">\n          {/* Lucide icon, large, text-muted-foreground */}\n        </div>\n\n        {/* Text */}\n        <div className=\"flex flex-col gap-2\">\n          <h2 className=\"text-xl font-bold font-heading\"><!-- Headline --></h2>\n          <p className=\"text-sm text-muted-foreground\"><!-- Explanation (1\u20132 sentences) --></p>\n        </div>\n\n        {/* Recovery action */}\n        <Button><!-- Primary action --></Button>\n\n        {/* Optional secondary action */}\n        <Button variant=\"ghost\" size=\"sm\"><!-- Secondary action --></Button>\n\n      </div>\n    </div>\n  )\n}",
+    "zones": {
+      "illustration": {
+        "role": "Visual indicator of the state type",
+        "components": {
+          "icon-box": "div with w-16 h-16 rounded-2xl bg-muted flex items-center justify-center wrapping a Lucide icon",
+          "empty-component": "Empty (from @/components/ui/empty) \u2014 handles icon, title, description, and action as props; use this for inline empty states within a larger layout"
+        },
+        "typical_content": [
+          "For empty state: inbox, folder, or domain-specific icon",
+          "For error: alert-circle or x-circle icon",
+          "For 404: file-question or map-off icon",
+          "For first-use: sparkles or plus-circle icon"
+        ],
+        "do_not_place": [
+          "Navigation",
+          "Form fields",
+          "Complex illustrations \u2014 keep it simple"
+        ]
+      },
+      "headline": {
+        "role": "Short, specific description of the state",
+        "components": {
+          "title": "h2 with text-xl font-bold font-heading text-center"
+        },
+        "typical_content": [
+          "Empty: 'No tasks yet', 'Your inbox is empty', 'Nothing here'",
+          "First-use: 'Create your first project', 'Get started'",
+          "Error: 'Something went wrong', 'Request failed'",
+          "404: 'Page not found', 'This page doesn't exist'"
+        ],
+        "do_not_place": [
+          "Technical error codes",
+          "Long sentences \u2014 the headline is 3\u20135 words max"
+        ]
+      },
+      "message": {
+        "role": "One-sentence explanation or encouragement",
+        "components": {
+          "description": "p with text-sm text-muted-foreground text-center"
+        },
+        "typical_content": [
+          "Empty: 'Get started by creating your first item.'",
+          "Error: 'Please try again, or contact support if the problem persists.'",
+          "404: 'The page you're looking for doesn't exist or has been moved.'"
+        ],
+        "do_not_place": [
+          "Technical stack traces",
+          "Multiple paragraphs"
+        ]
+      },
+      "cta": {
+        "role": "Single recovery or initiation action",
+        "components": {
+          "primary": "Button (default) \u2014 the one clear action",
+          "secondary": "Button (ghost, sm) \u2014 optional escape hatch (Go home, Contact support)"
+        },
+        "typical_content": [
+          "Empty / first-use: 'Create item', 'New project', 'Get started'",
+          "Error: 'Try again', 'Reload'",
+          "404: 'Go home', 'Back to dashboard'"
+        ],
+        "do_not_place": [
+          "Multiple primary actions \u2014 one recovery action only"
+        ]
+      }
+    },
+    "extra_dependencies": [],
+    "constraints": [
+      "Use the Empty component from @/components/ui/empty for inline empty states within tables, lists, and panels \u2014 it handles the icon/title/description/action layout automatically",
+      "Use the full-page custom layout only for full-viewport states (404, full-page error)",
+      "One primary action only \u2014 do not show multiple default-variant Buttons",
+      "The headline must be specific to the state: 'No tasks yet' is better than 'Empty'",
+      "Never show a technical error message or stack trace in the message \u2014 keep it human-readable",
+      "Constrain the content to max-w-sm and centre it \u2014 do not stretch the empty state full-width"
+    ],
+    "agent_instructions": "Identify which empty/error state variant is needed from the app description (empty list, first-use, error, 404). For inline empty states within tables or lists, use the Empty component with title, description, and action props. For full-page states, implement the centred stack layout with an appropriate Lucide icon in a rounded bg-muted box, a specific headline, a one-sentence message, and a single primary Button. If building a 404 page, add a secondary 'Go home' ghost Button. Choose an icon that matches the content type being empty (e.g. inbox icon for empty inbox, file-question for 404)."
+  }
+]
